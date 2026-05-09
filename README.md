@@ -17,10 +17,11 @@ La estructura se basa en el patrón de "Lista de Adyacencia", donde una entidad 
 ```sql
 CREATE TABLE locations (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    code VARCHAR(50), -- Código postal o código UBIGEO
-    parent_id INTEGER REFERENCES locations(id),
-    type VARCHAR(50) NOT NULL -- Ej: 'COUNTRY', 'STATE', 'PROVINCE', 'CITY'
+    country_id INTEGER NOT NULL, -- Referencia a la tabla de países
+    parent_id INTEGER REFERENCES locations(id), -- Lista de adyacencia
+    level_id INTEGER NOT NULL, -- Nivel administrativo
+    name VARCHAR(150) NOT NULL,
+    code VARCHAR(20) -- Código postal o código UBIGEO
 );
 ```
 
@@ -32,10 +33,10 @@ Para facilitar las contribuciones, el código SQL se ha dividido en dos archivos
 2. `postgres/data.sql`: Contiene únicamente las sentencias `INSERT` con la información geográfica, documentada también para saber el orden de inserción.
 
 ### ¿Cómo funciona la jerarquía?
-- **Nivel 1 (País):** Es el nodo raíz. Su `parent_id` es nulo (`NULL`).
-- **Nivel 2 (Región/Estado/Departamento):** Su `parent_id` apunta al ID del País.
-- **Nivel 3 (Provincia/Condado):** Su `parent_id` apunta al ID de la Región.
-- **Nivel 4 (Distrito/Ciudad):** Su `parent_id` apunta al ID de la Provincia.
+- **País:** Se almacena en una tabla independiente (`countries`). Todas las ubicaciones están vinculadas a un país mediante el `country_id`.
+- **Nivel 1 (Región/Estado/Departamento):** Es el nodo raíz dentro de la tabla de ubicaciones. Su `parent_id` es nulo (`NULL`).
+- **Nivel 2 (Provincia/Condado):** Su `parent_id` apunta al ID de la Región (Nivel 1).
+- **Nivel 3 (Distrito/Ciudad):** Su `parent_id` apunta al ID de la Provincia (Nivel 2).
 
 ## 🤝 ¿Cómo contribuir?
 
