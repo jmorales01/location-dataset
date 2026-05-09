@@ -1,172 +1,58 @@
---
--- PostgreSQL database dump
---
-
-\restrict Dds1O3o0UZrf6GAO37utvfryNRKCwt0oAY1phvUpq0FLZSkQrTtTScuJdNpoWfk
-
--- Dumped from database version 17.6
--- Dumped by pg_dump version 17.6
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
-SET default_tablespace = '';
-SET default_table_access_method = heap;
-
---
--- Name: administrative_levels; Type: TABLE; Schema: public; Owner: root
---
+CREATE TABLE public.countries (
+    id         SERIAL PRIMARY KEY,
+    name       VARCHAR(255) NOT NULL,
+    code       VARCHAR(3) NOT NULL,
+    is_active  BOOLEAN DEFAULT true,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
 
 CREATE TABLE public.administrative_levels (
-    id integer NOT NULL,
-    country_id integer NOT NULL,
-    name character varying(100) NOT NULL,
-    level_order integer NOT NULL
+    id          SERIAL PRIMARY KEY,
+    country_id  INTEGER NOT NULL,
+    name        VARCHAR(100) NOT NULL,
+    level_order INTEGER NOT NULL
 );
-
-
-ALTER TABLE public.administrative_levels OWNER TO root;
-
---
--- Name: administrative_levels_id_seq; Type: SEQUENCE; Schema: public; Owner: root
---
-
-CREATE SEQUENCE public.administrative_levels_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.administrative_levels_id_seq OWNER TO root;
-
---
--- Name: administrative_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
---
-
-ALTER SEQUENCE public.administrative_levels_id_seq OWNED BY public.administrative_levels.id;
-
-
---
--- Name: countries; Type: TABLE; Schema: public; Owner: root
---
-
-CREATE TABLE public.countries (
-    id integer NOT NULL,
-    name character varying(255) NOT NULL,
-    code character varying(3) NOT NULL,
-    is_active boolean DEFAULT true,
-    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
-);
-
-
-ALTER TABLE public.countries OWNER TO root;
-
---
--- Name: countries_id_seq; Type: SEQUENCE; Schema: public; Owner: root
---
-
-CREATE SEQUENCE public.countries_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER SEQUENCE public.countries_id_seq OWNER TO root;
-
---
--- Name: countries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
---
-
-ALTER SEQUENCE public.countries_id_seq OWNED BY public.countries.id;
-
-
---
--- Name: locations; Type: TABLE; Schema: public; Owner: root
---
 
 CREATE TABLE public.locations (
-    id integer NOT NULL,
-    country_id integer NOT NULL,
-    parent_id integer,
-    level_id integer NOT NULL,
-    name character varying(150) NOT NULL,
-    code character varying(20)
+    id         SERIAL PRIMARY KEY,
+    country_id INTEGER NOT NULL,
+    parent_id  INTEGER,
+    level_id   INTEGER NOT NULL,
+    name       VARCHAR(150) NOT NULL,
+    code       VARCHAR(20)
 );
 
+-- Llaves primarias (Si no las definiste en el CREATE TABLE)
+ALTER TABLE ONLY public.countries ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.administrative_levels ADD CONSTRAINT administrative_levels_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY public.locations ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
 
-ALTER TABLE public.locations OWNER TO root;
+-- Relaciones para administrative_levels
+ALTER TABLE public.administrative_levels 
+    ADD CONSTRAINT fk_level_country 
+    FOREIGN KEY (country_id) REFERENCES public.countries(id);
 
---
--- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: root
---
+-- Relaciones para locations
+ALTER TABLE public.locations 
+    ADD CONSTRAINT fk_loc_country 
+    FOREIGN KEY (country_id) REFERENCES public.countries(id);
 
-CREATE SEQUENCE public.locations_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
+ALTER TABLE public.locations 
+    ADD CONSTRAINT fk_loc_level 
+    FOREIGN KEY (level_id) REFERENCES public.administrative_levels(id);
 
-
-ALTER SEQUENCE public.locations_id_seq OWNER TO root;
-
---
--- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
---
-
-ALTER SEQUENCE public.locations_id_seq OWNED BY public.locations.id;
-
-
---
--- Name: administrative_levels id; Type: DEFAULT; Schema: public; Owner: root
---
-
-ALTER TABLE ONLY public.administrative_levels ALTER COLUMN id SET DEFAULT nextval('public.administrative_levels_id_seq'::regclass);
+ALTER TABLE public.locations 
+    ADD CONSTRAINT fk_loc_parent 
+    FOREIGN KEY (parent_id) REFERENCES public.locations(id);
 
 
---
--- Name: countries id; Type: DEFAULT; Schema: public; Owner: root
---
 
-ALTER TABLE ONLY public.countries ALTER COLUMN id SET DEFAULT nextval('public.countries_id_seq'::regclass);
+INSERT INTO public.countries (id, name, code, is_active, created_at) VALUES (1, 'Perú', 'PER', true, '2026-05-09 02:04:13.113346+00');
 
-
---
--- Name: locations id; Type: DEFAULT; Schema: public; Owner: root
---
-
-ALTER TABLE ONLY public.locations ALTER COLUMN id SET DEFAULT nextval('public.locations_id_seq'::regclass);
-
-
---
--- Data for Name: administrative_levels; Type: TABLE DATA; Schema: public; Owner: root
---
 
 INSERT INTO public.administrative_levels (id, country_id, name, level_order) VALUES (1, 1, 'Departamento', 1);
 INSERT INTO public.administrative_levels (id, country_id, name, level_order) VALUES (2, 1, 'Provincia', 2);
 INSERT INTO public.administrative_levels (id, country_id, name, level_order) VALUES (3, 1, 'Distrito', 3);
-
-
---
--- Data for Name: countries; Type: TABLE DATA; Schema: public; Owner: root
---
-
-INSERT INTO public.countries (id, name, code, is_active, created_at) VALUES (1, 'Perú', 'PER', true, '2026-05-09 02:04:13.113346+00');
 
 
 --
@@ -198,6 +84,7 @@ INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) V
 INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (23, 1, NULL, 1, 'TACNA', '23');
 INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (24, 1, NULL, 1, 'TUMBES', '24');
 INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (25, 1, NULL, 1, 'UCAYALI', '25');
+
 INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (26, 1, 1, 2, 'CHACHAPOYAS', '0101');
 INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (27, 1, 1, 2, 'BAGUA', '0102');
 INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (28, 1, 1, 2, 'BONGARA', '0103');
@@ -2288,122 +2175,26 @@ INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) V
 INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2113, 1, 50, 3, 'NUEVO CHIMBOTE', '021809');
 
 
---
--- Name: administrative_levels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
---
 
-SELECT pg_catalog.setval('public.administrative_levels_id_seq', 1, false);
-
-
---
--- Name: countries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
---
-
-SELECT pg_catalog.setval('public.countries_id_seq', 1, false);
+-- Sincroniza el contador de IDs basado en los datos cargados
+SELECT pg_catalog.setval('public.administrative_levels_id_seq', (SELECT MAX(id) FROM public.administrative_levels));
+SELECT pg_catalog.setval('public.countries_id_seq', (SELECT MAX(id) FROM public.countries));
+SELECT pg_catalog.setval('public.locations_id_seq', (SELECT MAX(id) FROM public.locations));
 
 
---
--- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
---
-
-SELECT pg_catalog.setval('public.locations_id_seq', 2113, true);
-
-
---
--- Name: administrative_levels administrative_levels_country_id_level_order_key; Type: CONSTRAINT; Schema: public; Owner: root
---
-
+-- Restricción de unicidad para niveles
 ALTER TABLE ONLY public.administrative_levels
     ADD CONSTRAINT administrative_levels_country_id_level_order_key UNIQUE (country_id, level_order);
 
-
---
--- Name: administrative_levels administrative_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: root
---
-
-ALTER TABLE ONLY public.administrative_levels
-    ADD CONSTRAINT administrative_levels_pkey PRIMARY KEY (id);
-
-
---
--- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: root
---
-
-ALTER TABLE ONLY public.countries
-    ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
-
-
---
--- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: root
---
-
-ALTER TABLE ONLY public.locations
-    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
-
-
---
--- Name: idx_locations_code; Type: INDEX; Schema: public; Owner: root
---
-
-CREATE INDEX idx_locations_code ON public.locations USING btree (code);
-
-
---
--- Name: idx_locations_level_id; Type: INDEX; Schema: public; Owner: root
---
-
-CREATE INDEX idx_locations_level_id ON public.locations USING btree (level_id);
-
-
---
--- Name: idx_locations_parent; Type: INDEX; Schema: public; Owner: root
---
-
-CREATE INDEX idx_locations_parent ON public.locations USING btree (parent_id);
-
-
---
--- Name: idx_locations_parent_id; Type: INDEX; Schema: public; Owner: root
---
-
-CREATE INDEX idx_locations_parent_id ON public.locations USING btree (parent_id);
-
-
---
--- Name: administrative_levels administrative_levels_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
---
-
+-- Llaves Foráneas (Foreign Keys)
 ALTER TABLE ONLY public.administrative_levels
     ADD CONSTRAINT administrative_levels_country_id_fkey FOREIGN KEY (country_id) REFERENCES public.countries(id);
-
-
---
--- Name: locations locations_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
---
 
 ALTER TABLE ONLY public.locations
     ADD CONSTRAINT locations_country_id_fkey FOREIGN KEY (country_id) REFERENCES public.countries(id);
 
-
---
--- Name: locations locations_level_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
---
-
 ALTER TABLE ONLY public.locations
     ADD CONSTRAINT locations_level_id_fkey FOREIGN KEY (level_id) REFERENCES public.administrative_levels(id);
 
-
---
--- Name: locations locations_parent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
---
-
 ALTER TABLE ONLY public.locations
     ADD CONSTRAINT locations_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.locations(id);
-
-
---
--- PostgreSQL database dump complete
---
-
-\unrestrict Dds1O3o0UZrf6GAO37utvfryNRKCwt0oAY1phvUpq0FLZSkQrTtTScuJdNpoWfk
-
