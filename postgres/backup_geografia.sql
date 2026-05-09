@@ -2198,3 +2198,10 @@ ALTER TABLE ONLY public.locations
 
 ALTER TABLE ONLY public.locations
     ADD CONSTRAINT locations_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.locations(id);
+
+
+-- Índices optimizados
+CREATE INDEX idx_locations_code ON public.locations USING btree (code);
+CREATE INDEX idx_locations_level_id ON public.locations USING btree (level_id);
+CREATE INDEX idx_locations_parent_id ON public.locations USING btree (parent_id);
+CREATE INDEX idx_locations_country_id ON public.locations USING btree (country_id);
