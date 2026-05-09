@@ -1,0 +1,2409 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict Dds1O3o0UZrf6GAO37utvfryNRKCwt0oAY1phvUpq0FLZSkQrTtTScuJdNpoWfk
+
+-- Dumped from database version 17.6
+-- Dumped by pg_dump version 17.6
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+SET default_tablespace = '';
+SET default_table_access_method = heap;
+
+--
+-- Name: administrative_levels; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.administrative_levels (
+    id integer NOT NULL,
+    country_id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    level_order integer NOT NULL
+);
+
+
+ALTER TABLE public.administrative_levels OWNER TO root;
+
+--
+-- Name: administrative_levels_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.administrative_levels_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.administrative_levels_id_seq OWNER TO root;
+
+--
+-- Name: administrative_levels_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.administrative_levels_id_seq OWNED BY public.administrative_levels.id;
+
+
+--
+-- Name: countries; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.countries (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    code character varying(3) NOT NULL,
+    is_active boolean DEFAULT true,
+    created_at timestamp with time zone DEFAULT CURRENT_TIMESTAMP
+);
+
+
+ALTER TABLE public.countries OWNER TO root;
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.countries_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.countries_id_seq OWNER TO root;
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.countries_id_seq OWNED BY public.countries.id;
+
+
+--
+-- Name: locations; Type: TABLE; Schema: public; Owner: root
+--
+
+CREATE TABLE public.locations (
+    id integer NOT NULL,
+    country_id integer NOT NULL,
+    parent_id integer,
+    level_id integer NOT NULL,
+    name character varying(150) NOT NULL,
+    code character varying(20)
+);
+
+
+ALTER TABLE public.locations OWNER TO root;
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE; Schema: public; Owner: root
+--
+
+CREATE SEQUENCE public.locations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.locations_id_seq OWNER TO root;
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: root
+--
+
+ALTER SEQUENCE public.locations_id_seq OWNED BY public.locations.id;
+
+
+--
+-- Name: administrative_levels id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.administrative_levels ALTER COLUMN id SET DEFAULT nextval('public.administrative_levels_id_seq'::regclass);
+
+
+--
+-- Name: countries id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.countries ALTER COLUMN id SET DEFAULT nextval('public.countries_id_seq'::regclass);
+
+
+--
+-- Name: locations id; Type: DEFAULT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.locations ALTER COLUMN id SET DEFAULT nextval('public.locations_id_seq'::regclass);
+
+
+--
+-- Data for Name: administrative_levels; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+INSERT INTO public.administrative_levels (id, country_id, name, level_order) VALUES (1, 1, 'Departamento', 1);
+INSERT INTO public.administrative_levels (id, country_id, name, level_order) VALUES (2, 1, 'Provincia', 2);
+INSERT INTO public.administrative_levels (id, country_id, name, level_order) VALUES (3, 1, 'Distrito', 3);
+
+
+--
+-- Data for Name: countries; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+INSERT INTO public.countries (id, name, code, is_active, created_at) VALUES (1, 'Perú', 'PER', true, '2026-05-09 02:04:13.113346+00');
+
+
+--
+-- Data for Name: locations; Type: TABLE DATA; Schema: public; Owner: root
+--
+
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1, 1, NULL, 1, 'AMAZONAS', '01');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2, 1, NULL, 1, 'ANCASH', '02');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (3, 1, NULL, 1, 'APURIMAC', '03');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (4, 1, NULL, 1, 'AREQUIPA', '04');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (5, 1, NULL, 1, 'AYACUCHO', '05');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (6, 1, NULL, 1, 'CAJAMARCA', '06');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (7, 1, NULL, 1, 'CALLAO', '07');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (8, 1, NULL, 1, 'CUSCO', '08');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (9, 1, NULL, 1, 'HUANCAVELICA', '09');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (10, 1, NULL, 1, 'HUANUCO', '10');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (11, 1, NULL, 1, 'ICA', '11');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (12, 1, NULL, 1, 'JUNIN', '12');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (13, 1, NULL, 1, 'LA LIBERTAD', '13');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (14, 1, NULL, 1, 'LAMBAYEQUE', '14');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (15, 1, NULL, 1, 'LIMA', '15');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (16, 1, NULL, 1, 'LORETO', '16');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (17, 1, NULL, 1, 'MADRE DE DIOS', '17');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (18, 1, NULL, 1, 'MOQUEGUA', '18');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (19, 1, NULL, 1, 'PASCO', '19');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (20, 1, NULL, 1, 'PIURA', '20');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (21, 1, NULL, 1, 'PUNO', '21');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (22, 1, NULL, 1, 'SAN MARTIN', '22');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (23, 1, NULL, 1, 'TACNA', '23');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (24, 1, NULL, 1, 'TUMBES', '24');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (25, 1, NULL, 1, 'UCAYALI', '25');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (26, 1, 1, 2, 'CHACHAPOYAS', '0101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (27, 1, 1, 2, 'BAGUA', '0102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (28, 1, 1, 2, 'BONGARA', '0103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (29, 1, 1, 2, 'CONDORCANQUI', '0104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (30, 1, 1, 2, 'LUYA', '0105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (31, 1, 1, 2, 'RODRIGUEZ DE MENDOZA', '0106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (32, 1, 1, 2, 'UTCUBAMBA', '0107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (33, 1, 2, 2, 'HUARAZ', '0201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (34, 1, 2, 2, 'AIJA', '0202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (35, 1, 2, 2, 'ANTONIO RAYMONDI', '0203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (36, 1, 2, 2, 'ASUNCION', '0204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (37, 1, 2, 2, 'BOLOGNESI', '0205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (38, 1, 2, 2, 'CARHUAZ', '0206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (39, 1, 2, 2, 'CARLOS FERMIN FITZCARRALD', '0207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (40, 1, 2, 2, 'CASMA', '0208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (41, 1, 2, 2, 'CORONGO', '0209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (42, 1, 2, 2, 'HUARI', '0210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (43, 1, 2, 2, 'HUARMEY', '0211');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (44, 1, 2, 2, 'HUAYLAS', '0212');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (45, 1, 2, 2, 'MARISCAL LUZURIAGA', '0213');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (46, 1, 2, 2, 'OCROS', '0214');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (47, 1, 2, 2, 'PALLASCA', '0215');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (48, 1, 2, 2, 'POMABAMBA', '0216');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (49, 1, 2, 2, 'RECUAY', '0217');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (50, 1, 2, 2, 'SANTA', '0218');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (51, 1, 2, 2, 'SIHUAS', '0219');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (52, 1, 2, 2, 'YUNGAY', '0220');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (53, 1, 3, 2, 'ABANCAY', '0301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (54, 1, 3, 2, 'ANDAHUAYLAS', '0302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (55, 1, 3, 2, 'ANTABAMBA', '0303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (56, 1, 3, 2, 'AYMARAES', '0304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (57, 1, 3, 2, 'COTABAMBAS', '0305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (58, 1, 3, 2, 'CHINCHEROS', '0306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (59, 1, 3, 2, 'GRAU', '0307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (60, 1, 4, 2, 'AREQUIPA', '0401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (61, 1, 4, 2, 'CAMANA', '0402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (62, 1, 4, 2, 'CARAVELI', '0403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (63, 1, 4, 2, 'CASTILLA', '0404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (64, 1, 4, 2, 'CAYLLOMA', '0405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (65, 1, 4, 2, 'CONDESUYOS', '0406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (66, 1, 4, 2, 'ISLAY', '0407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (67, 1, 4, 2, 'LA UNION', '0408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (68, 1, 5, 2, 'HUAMANGA', '0501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (69, 1, 5, 2, 'CANGALLO', '0502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (70, 1, 5, 2, 'HUANCA SANCOS', '0503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (71, 1, 5, 2, 'HUANTA', '0504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (72, 1, 5, 2, 'LA MAR', '0505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (73, 1, 5, 2, 'LUCANAS', '0506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (74, 1, 5, 2, 'PARINACOCHAS', '0507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (75, 1, 5, 2, 'PAUCAR DEL SARA SARA', '0508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (76, 1, 5, 2, 'SUCRE', '0509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (77, 1, 5, 2, 'VICTOR FAJARDO', '0510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (78, 1, 5, 2, 'VILCAS HUAMAN', '0511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (79, 1, 6, 2, 'CAJAMARCA', '0601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (80, 1, 6, 2, 'CAJABAMBA', '0602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (81, 1, 6, 2, 'CELENDIN', '0603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (82, 1, 6, 2, 'CHOTA', '0604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (83, 1, 6, 2, 'CONTUMAZA', '0605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (84, 1, 6, 2, 'CUTERVO', '0606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (85, 1, 6, 2, 'HUALGAYOC', '0607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (86, 1, 6, 2, 'JAEN', '0608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (87, 1, 6, 2, 'SAN IGNACIO', '0609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (88, 1, 6, 2, 'SAN MARCOS', '0610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (89, 1, 6, 2, 'SAN MIGUEL', '0611');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (90, 1, 6, 2, 'SAN PABLO', '0612');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (91, 1, 6, 2, 'SANTA CRUZ', '0613');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (92, 1, 7, 2, 'CALLAO', '0701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (93, 1, 8, 2, 'CUSCO', '0801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (94, 1, 8, 2, 'ACOMAYO', '0802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (95, 1, 8, 2, 'ANTA', '0803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (96, 1, 8, 2, 'CALCA', '0804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (97, 1, 8, 2, 'CANAS', '0805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (98, 1, 8, 2, 'CANCHIS', '0806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (99, 1, 8, 2, 'CHUMBIVILCAS', '0807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (100, 1, 8, 2, 'ESPINAR', '0808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (101, 1, 8, 2, 'LA CONVENCION', '0809');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (102, 1, 8, 2, 'PARURO', '0810');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (103, 1, 8, 2, 'PAUCARTAMBO', '0811');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (104, 1, 8, 2, 'QUISPICANCHI', '0812');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (105, 1, 8, 2, 'URUBAMBA', '0813');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (106, 1, 9, 2, 'HUANCAVELICA', '0901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (107, 1, 9, 2, 'ACOBAMBA', '0902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (108, 1, 9, 2, 'ANGARAES', '0903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (109, 1, 9, 2, 'CASTROVIRREYNA', '0904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (110, 1, 9, 2, 'CHURCAMPA', '0905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (111, 1, 9, 2, 'HUAYTARA', '0906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (112, 1, 9, 2, 'TAYACAJA', '0907');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (113, 1, 10, 2, 'HUANUCO', '1001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (114, 1, 10, 2, 'AMBO', '1002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (115, 1, 10, 2, 'DOS DE MAYO', '1003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (116, 1, 10, 2, 'HUACAYBAMBA', '1004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (117, 1, 10, 2, 'HUAMALIES', '1005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (118, 1, 10, 2, 'LEONCIO PRADO', '1006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (119, 1, 10, 2, 'MARAÑON', '1007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (120, 1, 10, 2, 'PACHITEA', '1008');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (121, 1, 10, 2, 'PUERTO INCA', '1009');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (122, 1, 10, 2, 'LAURICOCHA', '1010');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (123, 1, 10, 2, 'YAROWILCA', '1011');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (124, 1, 11, 2, 'ICA', '1101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (125, 1, 11, 2, 'CHINCHA', '1102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (126, 1, 11, 2, 'NAZCA', '1103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (127, 1, 11, 2, 'PALPA', '1104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (128, 1, 11, 2, 'PISCO', '1105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (129, 1, 12, 2, 'HUANCAYO', '1201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (130, 1, 12, 2, 'CONCEPCION', '1202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (131, 1, 12, 2, 'CHANCHAMAYO', '1203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (132, 1, 12, 2, 'JAUJA', '1204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (133, 1, 12, 2, 'JUNIN', '1205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (134, 1, 12, 2, 'SATIPO', '1206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (135, 1, 12, 2, 'TARMA', '1207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (136, 1, 12, 2, 'YAULI', '1208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (137, 1, 12, 2, 'CHUPACA', '1209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (138, 1, 13, 2, 'TRUJILLO', '1301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (139, 1, 13, 2, 'ASCOPE', '1302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (140, 1, 13, 2, 'BOLIVAR', '1303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (141, 1, 13, 2, 'CHEPEN', '1304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (142, 1, 13, 2, 'JULCAN', '1305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (143, 1, 13, 2, 'OTUZCO', '1306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (144, 1, 13, 2, 'PACASMAYO', '1307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (145, 1, 13, 2, 'PATAZ', '1308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (146, 1, 13, 2, 'SANCHEZ CARRION', '1309');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (147, 1, 13, 2, 'SANTIAGO DE CHUCO', '1310');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (148, 1, 13, 2, 'GRAN CHIMU', '1311');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (149, 1, 13, 2, 'VIRU', '1312');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (150, 1, 14, 2, 'CHICLAYO', '1401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (151, 1, 14, 2, 'FERREÑAFE', '1402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (152, 1, 14, 2, 'LAMBAYEQUE', '1403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (153, 1, 15, 2, 'LIMA', '1501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (154, 1, 15, 2, 'BARRANCA', '1502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (155, 1, 15, 2, 'CAJATAMBO', '1503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (156, 1, 15, 2, 'CANTA', '1504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (157, 1, 15, 2, 'CAÑETE', '1505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (158, 1, 15, 2, 'HUARAL', '1506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (159, 1, 15, 2, 'HUAROCHIRI', '1507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (160, 1, 15, 2, 'HUAURA', '1508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (161, 1, 15, 2, 'OYON', '1509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (162, 1, 15, 2, 'YAUYOS', '1510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (163, 1, 16, 2, 'MAYNAS', '1601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (164, 1, 16, 2, 'ALTO AMAZONAS', '1602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (165, 1, 16, 2, 'LORETO', '1603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (166, 1, 16, 2, 'MARISCAL RAMON CASTILLA', '1604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (167, 1, 16, 2, 'REQUENA', '1605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (168, 1, 16, 2, 'UCAYALI', '1606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (169, 1, 16, 2, 'DATEM DEL MARAÑON', '1607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (170, 1, 16, 2, 'PUTUMAYO', '1608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (171, 1, 17, 2, 'TAMBOPATA', '1701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (172, 1, 17, 2, 'MANU', '1702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (173, 1, 17, 2, 'TAHUAMANU', '1703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (174, 1, 18, 2, 'MARISCAL NIETO', '1801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (175, 1, 18, 2, 'GENERAL SANCHEZ CERRO', '1802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (176, 1, 18, 2, 'ILO', '1803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (177, 1, 19, 2, 'PASCO', '1901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (178, 1, 19, 2, 'DANIEL ALCIDES CARRION', '1902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (179, 1, 19, 2, 'OXAPAMPA', '1903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (180, 1, 20, 2, 'PIURA', '2001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (181, 1, 20, 2, 'AYABACA', '2002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (182, 1, 20, 2, 'HUANCABAMBA', '2003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (183, 1, 20, 2, 'MORROPON', '2004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (184, 1, 20, 2, 'PAITA', '2005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (185, 1, 20, 2, 'SULLANA', '2006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (186, 1, 20, 2, 'TALARA', '2007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (187, 1, 20, 2, 'SECHURA', '2008');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (188, 1, 21, 2, 'PUNO', '2101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (189, 1, 21, 2, 'AZANGARO', '2102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (190, 1, 21, 2, 'CARABAYA', '2103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (191, 1, 21, 2, 'CHUCUITO', '2104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (192, 1, 21, 2, 'EL COLLAO', '2105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (193, 1, 21, 2, 'HUANCANE', '2106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (194, 1, 21, 2, 'LAMPA', '2107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (195, 1, 21, 2, 'MELGAR', '2108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (196, 1, 21, 2, 'MOHO', '2109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (197, 1, 21, 2, 'SAN ANTONIO DE PUTINA', '2110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (198, 1, 21, 2, 'SAN ROMAN', '2111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (199, 1, 21, 2, 'SANDIA', '2112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (200, 1, 21, 2, 'YUNGUYO', '2113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (201, 1, 22, 2, 'MOYOBAMBA', '2201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (202, 1, 22, 2, 'BELLAVISTA', '2202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (203, 1, 22, 2, 'EL DORADO', '2203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (204, 1, 22, 2, 'HUALLAGA', '2204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (205, 1, 22, 2, 'LAMAS', '2205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (206, 1, 22, 2, 'MARISCAL CACERES', '2206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (207, 1, 22, 2, 'PICOTA', '2207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (208, 1, 22, 2, 'RIOJA', '2208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (209, 1, 22, 2, 'SAN MARTIN', '2209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (210, 1, 22, 2, 'TOCACHE', '2210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (211, 1, 23, 2, 'TACNA', '2301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (212, 1, 23, 2, 'CANDARAVE', '2302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (213, 1, 23, 2, 'JORGE BASADRE', '2303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (214, 1, 23, 2, 'TARATA', '2304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (215, 1, 24, 2, 'TUMBES', '2401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (216, 1, 24, 2, 'CONTRALMIRANTE VILLAR', '2402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (217, 1, 24, 2, 'ZARUMILLA', '2403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (218, 1, 25, 2, 'CORONEL PORTILLO', '2501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (219, 1, 25, 2, 'ATALAYA', '2502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (220, 1, 25, 2, 'PADRE ABAD', '2503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (221, 1, 25, 2, 'PURUS', '2504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (222, 1, 26, 3, 'SIHUAS', '021901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (223, 1, 26, 3, 'ACOBAMBA', '021902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (224, 1, 26, 3, 'ALFONSO UGARTE', '021903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (225, 1, 26, 3, 'CASHAPAMPA', '021904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (226, 1, 26, 3, 'CHINGALPO', '021905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (227, 1, 26, 3, 'HUAYLLABAMBA', '021906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (228, 1, 26, 3, 'QUICHES', '021907');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (229, 1, 26, 3, 'RAGASH', '021908');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (230, 1, 26, 3, 'SAN JUAN', '021909');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (231, 1, 26, 3, 'SICSIBAMBA', '021910');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (232, 1, 27, 3, 'YUNGAY', '022001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (233, 1, 27, 3, 'CASCAPARA', '022002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (234, 1, 27, 3, 'MANCOS', '022003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (235, 1, 27, 3, 'MATACOTO', '022004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (236, 1, 27, 3, 'QUILLO', '022005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (237, 1, 27, 3, 'RANRAHIRCA', '022006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (238, 1, 27, 3, 'SHUPLUY', '022007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (239, 1, 27, 3, 'YANAMA', '022008');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (240, 1, 28, 3, 'ABANCAY', '030101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (241, 1, 28, 3, 'CHACOCHE', '030102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (242, 1, 28, 3, 'CIRCA', '030103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (243, 1, 28, 3, 'CURAHUASI', '030104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (244, 1, 28, 3, 'HUANIPACA', '030105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (245, 1, 28, 3, 'LAMBRAMA', '030106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (246, 1, 28, 3, 'PICHIRHUA', '030107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (247, 1, 28, 3, 'SAN PEDRO DE CACHORA', '030108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (248, 1, 28, 3, 'TAMBURCO', '030109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (249, 1, 29, 3, 'ANDAHUAYLAS', '030201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (250, 1, 29, 3, 'ANDARAPA', '030202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (251, 1, 29, 3, 'CHIARA', '030203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (252, 1, 29, 3, 'HUANCARAMA', '030204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (253, 1, 29, 3, 'HUANCARAY', '030205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (254, 1, 29, 3, 'HUAYANA', '030206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (255, 1, 29, 3, 'KISHUARA', '030207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (256, 1, 29, 3, 'PACOBAMBA', '030208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (257, 1, 29, 3, 'PACUCHA', '030209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (258, 1, 29, 3, 'PAMPACHIRI', '030210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (259, 1, 29, 3, 'POMACOCHA', '030211');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (260, 1, 29, 3, 'SAN ANTONIO DE CACHI', '030212');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (261, 1, 29, 3, 'SAN JERONIMO', '030213');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (262, 1, 29, 3, 'SAN MIGUEL DE CHACCRAMPA', '030214');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (263, 1, 29, 3, 'SANTA MARIA DE CHICMO', '030215');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (264, 1, 29, 3, 'TALAVERA', '030216');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (265, 1, 29, 3, 'TUMAY HUARACA', '030217');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (266, 1, 29, 3, 'TURPO', '030218');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (267, 1, 29, 3, 'KAQUIABAMBA', '030219');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (268, 1, 29, 3, 'JOSE MARIA ARGUEDAS', '030220');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (269, 1, 30, 3, 'ANTABAMBA', '030301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (270, 1, 30, 3, 'EL ORO', '030302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (271, 1, 30, 3, 'HUAQUIRCA', '030303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (272, 1, 30, 3, 'JUAN ESPINOZA MEDRANO', '030304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (273, 1, 30, 3, 'OROPESA', '030305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (274, 1, 30, 3, 'PACHACONAS', '030306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (275, 1, 30, 3, 'SABAINO', '030307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (276, 1, 31, 3, 'CHALHUANCA', '030401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (277, 1, 31, 3, 'CAPAYA', '030402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (278, 1, 31, 3, 'CARAYBAMBA', '030403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (279, 1, 31, 3, 'CHAPIMARCA', '030404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (280, 1, 31, 3, 'COLCABAMBA', '030405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (281, 1, 31, 3, 'COTARUSE', '030406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (282, 1, 31, 3, 'HUAYLLO', '030407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (283, 1, 31, 3, 'JUSTO APU SAHUARAURA', '030408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (284, 1, 31, 3, 'LUCRE', '030409');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (285, 1, 31, 3, 'POCOHUANCA', '030410');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (286, 1, 31, 3, 'SAN JUAN DE CHACÑA', '030411');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (287, 1, 31, 3, 'SAÑAYCA', '030412');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (288, 1, 31, 3, 'SORAYA', '030413');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (289, 1, 31, 3, 'TAPAIRIHUA', '030414');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (290, 1, 31, 3, 'TINTAY', '030415');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (291, 1, 31, 3, 'TORAYA', '030416');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (292, 1, 31, 3, 'YANACA', '030417');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (293, 1, 32, 3, 'TAMBOBAMBA', '030501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (294, 1, 32, 3, 'COTABAMBAS', '030502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (295, 1, 32, 3, 'COYLLURQUI', '030503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (296, 1, 32, 3, 'HAQUIRA', '030504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (297, 1, 32, 3, 'MARA', '030505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (298, 1, 32, 3, 'CHALLHUAHUACHO', '030506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (299, 1, 33, 3, 'CHINCHEROS', '030601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (300, 1, 33, 3, 'ANCO-HUALLO', '030602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (301, 1, 33, 3, 'COCHARCAS', '030603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (302, 1, 33, 3, 'HUACCANA', '030604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (303, 1, 33, 3, 'OCOBAMBA', '030605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (304, 1, 33, 3, 'ONGOY', '030606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (305, 1, 33, 3, 'URANMARCA', '030607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (306, 1, 33, 3, 'RANRACANCHA', '030608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (307, 1, 33, 3, 'ROCCHACC', '030609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (308, 1, 33, 3, 'EL PORVENIR', '030610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (309, 1, 33, 3, 'LOS CHANKAS', '030611');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (310, 1, 33, 3, 'AHUAYRO', '030612');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (311, 1, 34, 3, 'CHUQUIBAMBILLA', '030701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (312, 1, 34, 3, 'CURPAHUASI', '030702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (313, 1, 34, 3, 'GAMARRA', '030703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (314, 1, 34, 3, 'HUAYLLATI', '030704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (315, 1, 34, 3, 'MAMARA', '030705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (316, 1, 34, 3, 'MICAELA BASTIDAS', '030706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (317, 1, 34, 3, 'PATAYPAMPA', '030707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (318, 1, 34, 3, 'PROGRESO', '030708');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (319, 1, 34, 3, 'SAN ANTONIO', '030709');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (320, 1, 34, 3, 'SANTA ROSA', '030710');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (321, 1, 34, 3, 'TURPAY', '030711');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (322, 1, 34, 3, 'VILCABAMBA', '030712');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (323, 1, 34, 3, 'VIRUNDO', '030713');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (324, 1, 34, 3, 'CURASCO', '030714');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (325, 1, 35, 3, 'AREQUIPA', '040101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (326, 1, 35, 3, 'ALTO SELVA ALEGRE', '040102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (327, 1, 35, 3, 'CAYMA', '040103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (328, 1, 35, 3, 'CERRO COLORADO', '040104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (329, 1, 35, 3, 'CHARACATO', '040105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (330, 1, 35, 3, 'CHIGUATA', '040106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (331, 1, 35, 3, 'JACOBO HUNTER', '040107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (332, 1, 35, 3, 'LA JOYA', '040108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (333, 1, 35, 3, 'MARIANO MELGAR', '040109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (334, 1, 35, 3, 'MIRAFLORES', '040110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (335, 1, 35, 3, 'MOLLEBAYA', '040111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (336, 1, 35, 3, 'PAUCARPATA', '040112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (337, 1, 35, 3, 'POCSI', '040113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (338, 1, 35, 3, 'POLOBAYA', '040114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (339, 1, 35, 3, 'QUEQUEÑA', '040115');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (340, 1, 35, 3, 'SABANDIA', '040116');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (341, 1, 35, 3, 'SACHACA', '040117');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (342, 1, 35, 3, 'SAN JUAN DE SIGUAS', '040118');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (343, 1, 35, 3, 'SAN JUAN DE TARUCANI', '040119');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (344, 1, 35, 3, 'SANTA ISABEL DE SIGUAS', '040120');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (345, 1, 35, 3, 'SANTA RITA DE SIGUAS', '040121');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (346, 1, 35, 3, 'SOCABAYA', '040122');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (347, 1, 35, 3, 'TIABAYA', '040123');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (348, 1, 35, 3, 'UCHUMAYO', '040124');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (349, 1, 35, 3, 'VITOR', '040125');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (350, 1, 35, 3, 'YANAHUARA', '040126');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (351, 1, 35, 3, 'YARABAMBA', '040127');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (352, 1, 35, 3, 'YURA', '040128');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (353, 1, 35, 3, 'JOSE LUIS BUSTAMANTE Y RIVERO', '040129');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (354, 1, 36, 3, 'CAMANA', '040201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (355, 1, 36, 3, 'JOSE MARIA QUIMPER', '040202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (356, 1, 36, 3, 'MARIANO NICOLAS VALCARCEL', '040203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (357, 1, 36, 3, 'MARISCAL CACERES', '040204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (358, 1, 36, 3, 'NICOLAS DE PIEROLA', '040205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (359, 1, 36, 3, 'OCOÑA', '040206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (360, 1, 36, 3, 'QUILCA', '040207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (361, 1, 36, 3, 'SAMUEL PASTOR', '040208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (362, 1, 37, 3, 'CARAVELI', '040301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (363, 1, 37, 3, 'ACARI', '040302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (364, 1, 37, 3, 'ATICO', '040303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (365, 1, 37, 3, 'ATIQUIPA', '040304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (366, 1, 37, 3, 'BELLA UNION', '040305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (367, 1, 37, 3, 'CAHUACHO', '040306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (368, 1, 37, 3, 'CHALA', '040307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (369, 1, 37, 3, 'CHAPARRA', '040308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (370, 1, 37, 3, 'HUANUHUANU', '040309');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (371, 1, 37, 3, 'JAQUI', '040310');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (372, 1, 37, 3, 'LOMAS', '040311');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (373, 1, 37, 3, 'QUICACHA', '040312');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (374, 1, 37, 3, 'YAUCA', '040313');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (375, 1, 38, 3, 'APLAO', '040401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (376, 1, 38, 3, 'ANDAGUA', '040402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (377, 1, 38, 3, 'AYO', '040403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (378, 1, 38, 3, 'CHACHAS', '040404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (379, 1, 38, 3, 'CHILCAYMARCA', '040405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (380, 1, 38, 3, 'CHOCO', '040406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (381, 1, 38, 3, 'HUANCARQUI', '040407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (382, 1, 38, 3, 'MACHAGUAY', '040408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (383, 1, 38, 3, 'ORCOPAMPA', '040409');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (384, 1, 38, 3, 'PAMPACOLCA', '040410');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (385, 1, 38, 3, 'TIPAN', '040411');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (386, 1, 38, 3, 'UÑON', '040412');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (387, 1, 38, 3, 'URACA', '040413');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (388, 1, 38, 3, 'VIRACO', '040414');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (389, 1, 39, 3, 'CHIVAY', '040501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (390, 1, 39, 3, 'ACHOMA', '040502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (391, 1, 39, 3, 'CABANACONDE', '040503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (392, 1, 39, 3, 'CALLALLI', '040504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (393, 1, 39, 3, 'CAYLLOMA', '040505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (394, 1, 39, 3, 'COPORAQUE', '040506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (395, 1, 39, 3, 'HUAMBO', '040507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (396, 1, 39, 3, 'HUANCA', '040508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (397, 1, 39, 3, 'ICHUPAMPA', '040509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (398, 1, 39, 3, 'LARI', '040510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (399, 1, 39, 3, 'LLUTA', '040511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (400, 1, 39, 3, 'MACA', '040512');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (401, 1, 39, 3, 'MADRIGAL', '040513');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (402, 1, 39, 3, 'SAN ANTONIO DE CHUCA', '040514');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (403, 1, 39, 3, 'SIBAYO', '040515');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (404, 1, 39, 3, 'TAPAY', '040516');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (405, 1, 39, 3, 'TISCO', '040517');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (406, 1, 39, 3, 'TUTI', '040518');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (407, 1, 39, 3, 'YANQUE', '040519');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (408, 1, 39, 3, 'MAJES', '040520');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (409, 1, 40, 3, 'CHUQUIBAMBA', '040601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (410, 1, 40, 3, 'ANDARAY', '040602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (411, 1, 40, 3, 'CAYARANI', '040603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (412, 1, 40, 3, 'CHICHAS', '040604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (413, 1, 40, 3, 'IRAY', '040605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (414, 1, 40, 3, 'RIO GRANDE', '040606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (415, 1, 40, 3, 'SALAMANCA', '040607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (416, 1, 40, 3, 'YANAQUIHUA', '040608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (417, 1, 41, 3, 'MOLLENDO', '040701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (418, 1, 41, 3, 'COCACHACRA', '040702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (419, 1, 41, 3, 'DEAN VALDIVIA', '040703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (420, 1, 41, 3, 'ISLAY', '040704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (421, 1, 41, 3, 'MEJIA', '040705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (422, 1, 41, 3, 'PUNTA DE BOMBON', '040706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (423, 1, 42, 3, 'COTAHUASI', '040801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (424, 1, 42, 3, 'ALCA', '040802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (425, 1, 42, 3, 'CHARCANA', '040803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (426, 1, 42, 3, 'HUAYNACOTAS', '040804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (427, 1, 42, 3, 'PAMPAMARCA', '040805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (428, 1, 42, 3, 'PUYCA', '040806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (429, 1, 42, 3, 'QUECHUALLA', '040807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (430, 1, 42, 3, 'SAYLA', '040808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (431, 1, 42, 3, 'TAURIA', '040809');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (432, 1, 42, 3, 'TOMEPAMPA', '040810');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (433, 1, 42, 3, 'TORO', '040811');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (434, 1, 43, 3, 'AYACUCHO', '050101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (435, 1, 43, 3, 'ACOCRO', '050102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (436, 1, 43, 3, 'ACOS VINCHOS', '050103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (437, 1, 43, 3, 'CARMEN ALTO', '050104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (438, 1, 43, 3, 'CHIARA', '050105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (439, 1, 43, 3, 'OCROS', '050106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (440, 1, 43, 3, 'PACAYCASA', '050107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (441, 1, 43, 3, 'QUINUA', '050108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (442, 1, 43, 3, 'SAN JOSE DE TICLLAS', '050109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (443, 1, 43, 3, 'SAN JUAN BAUTISTA', '050110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (444, 1, 43, 3, 'SANTIAGO DE PISCHA', '050111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (445, 1, 43, 3, 'SOCOS', '050112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (446, 1, 43, 3, 'TAMBILLO', '050113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (447, 1, 43, 3, 'VINCHOS', '050114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (448, 1, 43, 3, 'JESUS NAZARENO', '050115');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (449, 1, 43, 3, 'ANDRES AVELINO CACERES DORREGARAY', '050116');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (450, 1, 44, 3, 'CANGALLO', '050201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (451, 1, 44, 3, 'CHUSCHI', '050202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (452, 1, 44, 3, 'LOS MOROCHUCOS', '050203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (453, 1, 44, 3, 'MARIA PARADO DE BELLIDO', '050204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (454, 1, 44, 3, 'PARAS', '050205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (455, 1, 44, 3, 'TOTOS', '050206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (456, 1, 45, 3, 'SANCOS', '050301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (457, 1, 45, 3, 'CARAPO', '050302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (458, 1, 45, 3, 'SACSAMARCA', '050303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (459, 1, 45, 3, 'SANTIAGO DE LUCANAMARCA', '050304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (460, 1, 46, 3, 'HUANTA', '050401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (461, 1, 46, 3, 'AYAHUANCO', '050402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (462, 1, 46, 3, 'HUAMANGUILLA', '050403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (463, 1, 46, 3, 'IGUAIN', '050404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (464, 1, 46, 3, 'LURICOCHA', '050405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (465, 1, 46, 3, 'SANTILLANA', '050406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (466, 1, 46, 3, 'SIVIA', '050407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (467, 1, 46, 3, 'LLOCHEGUA', '050408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (468, 1, 46, 3, 'CANAYRE', '050409');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (469, 1, 46, 3, 'UCHURACCAY', '050410');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (470, 1, 46, 3, 'PUCACOLPA', '050411');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (471, 1, 46, 3, 'CHACA', '050412');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (472, 1, 46, 3, 'PUTIS', '050413');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (473, 1, 47, 3, 'SAN MIGUEL', '050501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (474, 1, 47, 3, 'ANCO', '050502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (475, 1, 47, 3, 'AYNA', '050503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (476, 1, 47, 3, 'CHILCAS', '050504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (477, 1, 47, 3, 'CHUNGUI', '050505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (478, 1, 47, 3, 'LUIS CARRANZA', '050506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (479, 1, 47, 3, 'SANTA ROSA', '050507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (480, 1, 47, 3, 'TAMBO', '050508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (481, 1, 47, 3, 'SAMUGARI', '050509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (482, 1, 47, 3, 'ANCHIHUAY', '050510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (483, 1, 47, 3, 'ORONCCOY', '050511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (484, 1, 47, 3, 'UNION PROGRESO', '050512');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (485, 1, 47, 3, 'RIO MAGDALENA', '050513');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (486, 1, 47, 3, 'NINABAMBA', '050514');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (487, 1, 47, 3, 'PATIBAMBA', '050515');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (488, 1, 48, 3, 'PUQUIO', '050601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (489, 1, 48, 3, 'AUCARA', '050602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (490, 1, 48, 3, 'CABANA', '050603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (491, 1, 48, 3, 'CARMEN SALCEDO', '050604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (492, 1, 48, 3, 'CHAVIÑA', '050605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (493, 1, 48, 3, 'CHIPAO', '050606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (494, 1, 48, 3, 'HUAC-HUAS', '050607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (495, 1, 48, 3, 'LARAMATE', '050608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (496, 1, 48, 3, 'LEONCIO PRADO', '050609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (497, 1, 48, 3, 'LLAUTA', '050610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (498, 1, 48, 3, 'LUCANAS', '050611');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (499, 1, 48, 3, 'OCAÑA', '050612');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (500, 1, 48, 3, 'OTOCA', '050613');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (501, 1, 48, 3, 'SAISA', '050614');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (502, 1, 48, 3, 'SAN CRISTOBAL', '050615');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (503, 1, 48, 3, 'SAN JUAN', '050616');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (504, 1, 48, 3, 'SAN PEDRO', '050617');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (505, 1, 48, 3, 'SAN PEDRO DE PALCO', '050618');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (506, 1, 48, 3, 'SANCOS', '050619');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (507, 1, 48, 3, 'SANTA ANA DE HUAYCAHUACHO', '050620');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (508, 1, 48, 3, 'SANTA LUCIA', '050621');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (509, 1, 49, 3, 'CORACORA', '050701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (510, 1, 49, 3, 'CHUMPI', '050702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (511, 1, 49, 3, 'CORONEL CASTAÑEDA', '050703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (512, 1, 49, 3, 'PACAPAUSA', '050704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (513, 1, 49, 3, 'PULLO', '050705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (514, 1, 49, 3, 'PUYUSCA', '050706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (515, 1, 49, 3, 'SAN FRANCISCO DE RAVACAYCO', '050707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (516, 1, 49, 3, 'UPAHUACHO', '050708');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (517, 1, 50, 3, 'PAUSA', '050801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (518, 1, 50, 3, 'COLTA', '050802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (519, 1, 50, 3, 'CORCULLA', '050803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (520, 1, 50, 3, 'LAMPA', '050804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (521, 1, 50, 3, 'MARCABAMBA', '050805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (522, 1, 50, 3, 'OYOLO', '050806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (523, 1, 50, 3, 'PARARCA', '050807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (524, 1, 50, 3, 'SAN JAVIER DE ALPABAMBA', '050808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (525, 1, 50, 3, 'SAN JOSE DE USHUA', '050809');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (526, 1, 50, 3, 'SARA SARA', '050810');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (527, 1, 51, 3, 'QUEROBAMBA', '050901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (528, 1, 51, 3, 'BELEN', '050902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (529, 1, 51, 3, 'CHALCOS', '050903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (530, 1, 51, 3, 'CHILCAYOC', '050904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (531, 1, 51, 3, 'HUACAÑA', '050905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (532, 1, 51, 3, 'MORCOLLA', '050906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (533, 1, 51, 3, 'PAICO', '050907');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (534, 1, 51, 3, 'SAN PEDRO DE LARCAY', '050908');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (535, 1, 51, 3, 'SAN SALVADOR DE QUIJE', '050909');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (536, 1, 51, 3, 'SANTIAGO DE PAUCARAY', '050910');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (537, 1, 51, 3, 'SORAS', '050911');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (538, 1, 52, 3, 'HUANCAPI', '051001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (539, 1, 52, 3, 'ALCAMENCA', '051002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (540, 1, 52, 3, 'APONGO', '051003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (541, 1, 52, 3, 'ASQUIPATA', '051004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (542, 1, 52, 3, 'CANARIA', '051005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (543, 1, 52, 3, 'CAYARA', '051006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (544, 1, 52, 3, 'COLCA', '051007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (545, 1, 52, 3, 'HUAMANQUIQUIA', '051008');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (546, 1, 52, 3, 'HUANCARAYLLA', '051009');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (547, 1, 52, 3, 'HUAYA', '051010');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (548, 1, 52, 3, 'SARHUA', '051011');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (549, 1, 52, 3, 'VILCANCHOS', '051012');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (550, 1, 53, 3, 'VILCAS HUAMAN', '051101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (551, 1, 53, 3, 'ACCOMARCA', '051102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (552, 1, 53, 3, 'CARHUANCA', '051103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (553, 1, 53, 3, 'CONCEPCION', '051104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (554, 1, 53, 3, 'HUAMBALPA', '051105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (555, 1, 53, 3, 'INDEPENDENCIA', '051106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (556, 1, 53, 3, 'SAURAMA', '051107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (557, 1, 53, 3, 'VISCHONGO', '051108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (558, 1, 54, 3, 'CAJAMARCA', '060101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (559, 1, 54, 3, 'ASUNCION', '060102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (560, 1, 54, 3, 'CHETILLA', '060103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (561, 1, 54, 3, 'COSPAN', '060104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (562, 1, 54, 3, 'ENCAÑADA', '060105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (563, 1, 54, 3, 'JESUS', '060106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (564, 1, 54, 3, 'LLACANORA', '060107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (565, 1, 54, 3, 'LOS BAÑOS DEL INCA', '060108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (566, 1, 54, 3, 'MAGDALENA', '060109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (567, 1, 54, 3, 'MATARA', '060110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (568, 1, 54, 3, 'NAMORA', '060111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (569, 1, 54, 3, 'SAN JUAN', '060112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (570, 1, 55, 3, 'CAJABAMBA', '060201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (571, 1, 55, 3, 'CACHACHI', '060202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (572, 1, 55, 3, 'CONDEBAMBA', '060203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (573, 1, 55, 3, 'SITACOCHA', '060204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (574, 1, 56, 3, 'CELENDIN', '060301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (575, 1, 56, 3, 'CHUMUCH', '060302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (576, 1, 56, 3, 'CORTEGANA', '060303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (577, 1, 56, 3, 'HUASMIN', '060304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (578, 1, 56, 3, 'JORGE CHAVEZ', '060305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (579, 1, 56, 3, 'JOSE GALVEZ', '060306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (580, 1, 56, 3, 'MIGUEL IGLESIAS', '060307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (581, 1, 56, 3, 'OXAMARCA', '060308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (582, 1, 56, 3, 'SOROCHUCO', '060309');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (583, 1, 56, 3, 'SUCRE', '060310');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (584, 1, 56, 3, 'UTCO', '060311');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (585, 1, 56, 3, 'LA LIBERTAD DE PALLAN', '060312');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (586, 1, 57, 3, 'CHOTA', '060401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (587, 1, 57, 3, 'ANGUIA', '060402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (588, 1, 57, 3, 'CHADIN', '060403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (589, 1, 57, 3, 'CHIGUIRIP', '060404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (590, 1, 57, 3, 'CHIMBAN', '060405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (591, 1, 57, 3, 'CHOROPAMPA', '060406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (592, 1, 57, 3, 'COCHABAMBA', '060407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (593, 1, 57, 3, 'CONCHAN', '060408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (594, 1, 57, 3, 'HUAMBOS', '060409');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (595, 1, 57, 3, 'LAJAS', '060410');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (596, 1, 57, 3, 'LLAMA', '060411');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (597, 1, 57, 3, 'MIRACOSTA', '060412');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (598, 1, 57, 3, 'PACCHA', '060413');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (599, 1, 57, 3, 'PION', '060414');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (600, 1, 57, 3, 'QUEROCOTO', '060415');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (601, 1, 57, 3, 'SAN JUAN DE LICUPIS', '060416');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (602, 1, 57, 3, 'TACABAMBA', '060417');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (603, 1, 57, 3, 'TOCMOCHE', '060418');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (604, 1, 57, 3, 'CHALAMARCA', '060419');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (605, 1, 58, 3, 'CONTUMAZA', '060501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (606, 1, 58, 3, 'CHILETE', '060502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (607, 1, 58, 3, 'CUPISNIQUE', '060503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (608, 1, 58, 3, 'GUZMANGO', '060504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (609, 1, 58, 3, 'SAN BENITO', '060505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (610, 1, 58, 3, 'SANTA CRUZ DE TOLEDO', '060506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (611, 1, 58, 3, 'TANTARICA', '060507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (612, 1, 58, 3, 'YONAN', '060508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (613, 1, 59, 3, 'CUTERVO', '060601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (614, 1, 59, 3, 'CALLAYUC', '060602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (615, 1, 59, 3, 'CHOROS', '060603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (616, 1, 59, 3, 'CUJILLO', '060604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (617, 1, 59, 3, 'LA RAMADA', '060605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (618, 1, 59, 3, 'PIMPINGOS', '060606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (619, 1, 59, 3, 'QUEROCOTILLO', '060607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (620, 1, 59, 3, 'SAN ANDRES DE CUTERVO', '060608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (621, 1, 59, 3, 'SAN JUAN DE CUTERVO', '060609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (622, 1, 59, 3, 'SAN LUIS DE LUCMA', '060610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (623, 1, 59, 3, 'SANTA CRUZ', '060611');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (624, 1, 59, 3, 'SANTO DOMINGO DE LA CAPILLA', '060612');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (625, 1, 59, 3, 'SANTO TOMAS', '060613');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (626, 1, 59, 3, 'SOCOTA', '060614');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (627, 1, 59, 3, 'TORIBIO CASANOVA', '060615');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (628, 1, 60, 3, 'BAMBAMARCA', '060701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (629, 1, 60, 3, 'CHUGUR', '060702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (630, 1, 60, 3, 'HUALGAYOC', '060703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (631, 1, 61, 3, 'JAEN', '060801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (632, 1, 61, 3, 'BELLAVISTA', '060802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (633, 1, 61, 3, 'CHONTALI', '060803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (634, 1, 61, 3, 'COLASAY', '060804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (635, 1, 61, 3, 'HUABAL', '060805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (636, 1, 61, 3, 'LAS PIRIAS', '060806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (637, 1, 61, 3, 'POMAHUACA', '060807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (638, 1, 61, 3, 'PUCARA', '060808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (639, 1, 61, 3, 'SALLIQUE', '060809');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (640, 1, 61, 3, 'SAN FELIPE', '060810');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (641, 1, 61, 3, 'SAN JOSE DEL ALTO', '060811');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (642, 1, 61, 3, 'SANTA ROSA', '060812');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (643, 1, 62, 3, 'SAN IGNACIO', '060901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (644, 1, 62, 3, 'CHIRINOS', '060902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (645, 1, 62, 3, 'HUARANGO', '060903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (646, 1, 62, 3, 'LA COIPA', '060904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (647, 1, 62, 3, 'NAMBALLE', '060905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (648, 1, 62, 3, 'SAN JOSE DE LOURDES', '060906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (649, 1, 62, 3, 'TABACONAS', '060907');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (650, 1, 63, 3, 'PEDRO GALVEZ', '061001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (651, 1, 63, 3, 'CHANCAY', '061002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (652, 1, 63, 3, 'EDUARDO VILLANUEVA', '061003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (653, 1, 63, 3, 'GREGORIO PITA', '061004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (654, 1, 63, 3, 'ICHOCAN', '061005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (655, 1, 63, 3, 'JOSE MANUEL QUIROZ', '061006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (656, 1, 63, 3, 'JOSE SABOGAL', '061007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (657, 1, 64, 3, 'SAN MIGUEL', '061101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (658, 1, 64, 3, 'BOLIVAR', '061102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (659, 1, 64, 3, 'CALQUIS', '061103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (660, 1, 64, 3, 'CATILLUC', '061104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (661, 1, 64, 3, 'EL PRADO', '061105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (662, 1, 64, 3, 'LA FLORIDA', '061106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (663, 1, 64, 3, 'LLAPA', '061107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (664, 1, 64, 3, 'NANCHOC', '061108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (665, 1, 64, 3, 'NIEPOS', '061109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (666, 1, 64, 3, 'SAN GREGORIO', '061110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (667, 1, 64, 3, 'SAN SILVESTRE DE COCHAN', '061111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (668, 1, 64, 3, 'TONGOD', '061112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (669, 1, 64, 3, 'UNION AGUA BLANCA', '061113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (670, 1, 65, 3, 'SAN PABLO', '061201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (671, 1, 65, 3, 'SAN BERNARDINO', '061202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (672, 1, 65, 3, 'SAN LUIS', '061203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (673, 1, 65, 3, 'TUMBADEN', '061204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (674, 1, 66, 3, 'SANTA CRUZ', '061301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (675, 1, 66, 3, 'ANDABAMBA', '061302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (676, 1, 66, 3, 'CATACHE', '061303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (677, 1, 66, 3, 'CHANCAYBAÑOS', '061304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (678, 1, 66, 3, 'LA ESPERANZA', '061305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (679, 1, 66, 3, 'NINABAMBA', '061306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (680, 1, 66, 3, 'PULAN', '061307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (681, 1, 66, 3, 'SAUCEPAMPA', '061308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (682, 1, 66, 3, 'SEXI', '061309');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (683, 1, 66, 3, 'UTICYACU', '061310');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (684, 1, 66, 3, 'YAUYUCAN', '061311');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (685, 1, 67, 3, 'CALLAO', '070101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (686, 1, 67, 3, 'BELLAVISTA', '070102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (687, 1, 67, 3, 'CARMEN DE LA LEGUA REYNOSO', '070103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (688, 1, 67, 3, 'LA PERLA', '070104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (689, 1, 67, 3, 'LA PUNTA', '070105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (690, 1, 67, 3, 'VENTANILLA', '070106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (691, 1, 67, 3, 'MI PERU', '070107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (692, 1, 68, 3, 'CUSCO', '080101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (693, 1, 68, 3, 'CCORCA', '080102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (694, 1, 68, 3, 'POROY', '080103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (695, 1, 68, 3, 'SAN JERONIMO', '080104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (696, 1, 68, 3, 'SAN SEBASTIAN', '080105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (697, 1, 68, 3, 'SANTIAGO', '080106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (698, 1, 68, 3, 'SAYLLA', '080107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (699, 1, 68, 3, 'WANCHAQ', '080108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (700, 1, 69, 3, 'ACOMAYO', '080201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (701, 1, 69, 3, 'ACOPIA', '080202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (702, 1, 69, 3, 'ACOS', '080203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (703, 1, 69, 3, 'MOSOC LLACTA', '080204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (704, 1, 69, 3, 'POMACANCHI', '080205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (705, 1, 69, 3, 'RONDOCAN', '080206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (706, 1, 69, 3, 'SANGARARA', '080207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (707, 1, 70, 3, 'ANTA', '080301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (708, 1, 70, 3, 'ANCAHUASI', '080302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (709, 1, 70, 3, 'CACHIMAYO', '080303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (710, 1, 70, 3, 'CHINCHAYPUJIO', '080304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (711, 1, 70, 3, 'HUAROCONDO', '080305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (712, 1, 70, 3, 'LIMATAMBO', '080306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (713, 1, 70, 3, 'MOLLEPATA', '080307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (714, 1, 70, 3, 'PUCYURA', '080308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (715, 1, 70, 3, 'ZURITE', '080309');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (716, 1, 71, 3, 'CALCA', '080401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (717, 1, 71, 3, 'COYA', '080402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (718, 1, 71, 3, 'LAMAY', '080403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (719, 1, 71, 3, 'LARES', '080404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (720, 1, 71, 3, 'PISAC', '080405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (721, 1, 71, 3, 'SAN SALVADOR', '080406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (722, 1, 71, 3, 'TARAY', '080407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (723, 1, 71, 3, 'YANATILE', '080408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (724, 1, 72, 3, 'YANAOCA', '080501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (725, 1, 72, 3, 'CHECCA', '080502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (726, 1, 72, 3, 'KUNTURKANKI', '080503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (727, 1, 72, 3, 'LANGUI', '080504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (728, 1, 72, 3, 'LAYO', '080505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (729, 1, 72, 3, 'PAMPAMARCA', '080506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (730, 1, 72, 3, 'QUEHUE', '080507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (731, 1, 72, 3, 'TUPAC AMARU', '080508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (732, 1, 73, 3, 'SICUANI', '080601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (733, 1, 73, 3, 'CHECACUPE', '080602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (734, 1, 73, 3, 'COMBAPATA', '080603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (735, 1, 73, 3, 'MARANGANI', '080604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (736, 1, 73, 3, 'PITUMARCA', '080605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (737, 1, 73, 3, 'SAN PABLO', '080606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (738, 1, 73, 3, 'SAN PEDRO', '080607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (739, 1, 73, 3, 'TINTA', '080608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (740, 1, 74, 3, 'SANTO TOMAS', '080701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (741, 1, 74, 3, 'CAPACMARCA', '080702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (742, 1, 74, 3, 'CHAMACA', '080703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (743, 1, 74, 3, 'COLQUEMARCA', '080704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (744, 1, 74, 3, 'LIVITACA', '080705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (745, 1, 74, 3, 'LLUSCO', '080706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (746, 1, 74, 3, 'QUIÑOTA', '080707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (747, 1, 74, 3, 'VELILLE', '080708');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (748, 1, 75, 3, 'ESPINAR', '080801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (749, 1, 75, 3, 'CONDOROMA', '080802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (750, 1, 75, 3, 'COPORAQUE', '080803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (751, 1, 75, 3, 'OCORURO', '080804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (752, 1, 75, 3, 'PALLPATA', '080805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (753, 1, 75, 3, 'PICHIGUA', '080806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (754, 1, 75, 3, 'SUYCKUTAMBO', '080807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (755, 1, 75, 3, 'ALTO PICHIGUA', '080808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (756, 1, 76, 3, 'SANTA ANA', '080901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (757, 1, 76, 3, 'ECHARATE', '080902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (758, 1, 76, 3, 'HUAYOPATA', '080903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (759, 1, 76, 3, 'MARANURA', '080904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (760, 1, 76, 3, 'OCOBAMBA', '080905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (761, 1, 76, 3, 'QUELLOUNO', '080906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (762, 1, 76, 3, 'QUIMBIRI', '080907');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (763, 1, 76, 3, 'SANTA TERESA', '080908');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (764, 1, 76, 3, 'VILCABAMBA', '080909');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (765, 1, 76, 3, 'PICHARI', '080910');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (766, 1, 76, 3, 'INKAWASI', '080911');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (767, 1, 76, 3, 'VILLA VIRGEN', '080912');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (768, 1, 76, 3, 'VILLA KINTIARINA', '080913');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (769, 1, 76, 3, 'MEGANTONI', '080914');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (770, 1, 76, 3, 'KUMPIRUSHIATO', '080915');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (771, 1, 76, 3, 'CIELO PUNCO', '080916');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (772, 1, 76, 3, 'MANITEA', '080917');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (773, 1, 76, 3, 'UNION ASHÁNINKA', '080918');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (774, 1, 77, 3, 'PARURO', '081001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (775, 1, 77, 3, 'ACCHA', '081002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (776, 1, 77, 3, 'CCAPI', '081003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (777, 1, 77, 3, 'COLCHA', '081004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (778, 1, 77, 3, 'HUANOQUITE', '081005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (779, 1, 77, 3, 'OMACHA', '081006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (780, 1, 77, 3, 'PACCARITAMBO', '081007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (781, 1, 77, 3, 'PILLPINTO', '081008');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (782, 1, 77, 3, 'YAURISQUE', '081009');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (783, 1, 78, 3, 'PAUCARTAMBO', '081101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (784, 1, 78, 3, 'CAICAY', '081102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (785, 1, 78, 3, 'CHALLABAMBA', '081103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (786, 1, 78, 3, 'COLQUEPATA', '081104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (787, 1, 78, 3, 'HUANCARANI', '081105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (788, 1, 78, 3, 'KOSÑIPATA', '081106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (789, 1, 79, 3, 'URCOS', '081201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (790, 1, 79, 3, 'ANDAHUAYLILLAS', '081202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (791, 1, 79, 3, 'CAMANTI', '081203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (792, 1, 79, 3, 'CCARHUAYO', '081204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (793, 1, 79, 3, 'CCATCA', '081205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (794, 1, 79, 3, 'CUSIPATA', '081206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (795, 1, 79, 3, 'HUARO', '081207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (796, 1, 79, 3, 'LUCRE', '081208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (797, 1, 79, 3, 'MARCAPATA', '081209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (798, 1, 79, 3, 'OCONGATE', '081210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (799, 1, 79, 3, 'OROPESA', '081211');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (800, 1, 79, 3, 'QUIQUIJANA', '081212');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (801, 1, 80, 3, 'URUBAMBA', '081301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (802, 1, 80, 3, 'CHINCHERO', '081302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (803, 1, 80, 3, 'HUAYLLABAMBA', '081303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (804, 1, 80, 3, 'MACHUPICCHU', '081304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (805, 1, 80, 3, 'MARAS', '081305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (806, 1, 80, 3, 'OLLANTAYTAMBO', '081306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (807, 1, 80, 3, 'YUCAY', '081307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (808, 1, 81, 3, 'HUANCAVELICA', '090101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (809, 1, 81, 3, 'ACOBAMBILLA', '090102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (810, 1, 81, 3, 'ACORIA', '090103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (811, 1, 81, 3, 'CONAYCA', '090104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (812, 1, 81, 3, 'CUENCA', '090105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (813, 1, 81, 3, 'HUACHOCOLPA', '090106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (814, 1, 81, 3, 'HUAYLLAHUARA', '090107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (815, 1, 81, 3, 'IZCUCHACA', '090108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (816, 1, 81, 3, 'LARIA', '090109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (817, 1, 81, 3, 'MANTA', '090110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (818, 1, 81, 3, 'MARISCAL CACERES', '090111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (819, 1, 81, 3, 'MOYA', '090112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (820, 1, 81, 3, 'NUEVO OCCORO', '090113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (821, 1, 81, 3, 'PALCA', '090114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (822, 1, 81, 3, 'PILCHACA', '090115');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (823, 1, 81, 3, 'VILCA', '090116');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (824, 1, 81, 3, 'YAULI', '090117');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (825, 1, 81, 3, 'ASCENSION', '090118');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (826, 1, 81, 3, 'HUANDO', '090119');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (827, 1, 82, 3, 'ACOBAMBA', '090201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (828, 1, 82, 3, 'ANDABAMBA', '090202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (829, 1, 82, 3, 'ANTA', '090203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (830, 1, 82, 3, 'CAJA', '090204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (831, 1, 82, 3, 'MARCAS', '090205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (832, 1, 82, 3, 'PAUCARA', '090206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (833, 1, 82, 3, 'POMACOCHA', '090207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (834, 1, 82, 3, 'ROSARIO', '090208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (835, 1, 83, 3, 'LIRCAY', '090301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (836, 1, 83, 3, 'ANCHONGA', '090302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (837, 1, 83, 3, 'CALLANMARCA', '090303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (838, 1, 83, 3, 'CCOCHACCASA', '090304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (839, 1, 83, 3, 'CHINCHO', '090305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (840, 1, 83, 3, 'CONGALLA', '090306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (841, 1, 83, 3, 'HUANCA-HUANCA', '090307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (842, 1, 83, 3, 'HUAYLLAY GRANDE', '090308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (843, 1, 83, 3, 'JULCAMARCA', '090309');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (844, 1, 83, 3, 'SAN ANTONIO DE ANTAPARCO', '090310');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (845, 1, 83, 3, 'SANTO TOMAS DE PATA', '090311');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (846, 1, 83, 3, 'SECCLLA', '090312');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (847, 1, 84, 3, 'CASTROVIRREYNA', '090401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (848, 1, 84, 3, 'ARMA', '090402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (849, 1, 84, 3, 'AURAHUA', '090403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (850, 1, 84, 3, 'CAPILLAS', '090404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (851, 1, 84, 3, 'CHUPAMARCA', '090405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (852, 1, 84, 3, 'COCAS', '090406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (853, 1, 84, 3, 'HUACHOS', '090407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (854, 1, 84, 3, 'HUAMATAMBO', '090408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (855, 1, 84, 3, 'MOLLEPAMPA', '090409');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (856, 1, 84, 3, 'SAN JUAN', '090410');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (857, 1, 84, 3, 'SANTA ANA', '090411');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (858, 1, 84, 3, 'TANTARA', '090412');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (859, 1, 84, 3, 'TICRAPO', '090413');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (860, 1, 85, 3, 'CHURCAMPA', '090501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (861, 1, 85, 3, 'ANCO', '090502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (862, 1, 85, 3, 'CHINCHIHUASI', '090503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (863, 1, 85, 3, 'EL CARMEN', '090504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (864, 1, 85, 3, 'LA MERCED', '090505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (865, 1, 85, 3, 'LOCROJA', '090506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (866, 1, 85, 3, 'PAUCARBAMBA', '090507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (867, 1, 85, 3, 'SAN MIGUEL DE MAYOCC', '090508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (868, 1, 85, 3, 'SAN PEDRO DE CORIS', '090509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (869, 1, 85, 3, 'PACHAMARCA', '090510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (870, 1, 85, 3, 'COSME', '090511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (871, 1, 86, 3, 'HUAYTARA', '090601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (872, 1, 86, 3, 'AYAVI', '090602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (873, 1, 86, 3, 'CORDOVA', '090603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (874, 1, 86, 3, 'HUAYACUNDO ARMA', '090604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (875, 1, 86, 3, 'LARAMARCA', '090605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (876, 1, 86, 3, 'OCOYO', '090606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (877, 1, 86, 3, 'PILPICHACA', '090607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (878, 1, 86, 3, 'QUERCO', '090608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (879, 1, 86, 3, 'QUITO-ARMA', '090609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (880, 1, 86, 3, 'SAN ANTONIO DE CUSICANCHA', '090610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (881, 1, 86, 3, 'SAN FRANCISCO DE SANGAYAICO', '090611');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (882, 1, 86, 3, 'SAN ISIDRO', '090612');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (883, 1, 86, 3, 'SANTIAGO DE CHOCORVOS', '090613');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (884, 1, 86, 3, 'SANTIAGO DE QUIRAHUARA', '090614');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (885, 1, 86, 3, 'SANTO DOMINGO DE CAPILLAS', '090615');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (886, 1, 86, 3, 'TAMBO', '090616');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (887, 1, 87, 3, 'PAMPAS', '090701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (888, 1, 99, 3, 'PARCONA', '110106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (889, 1, 87, 3, 'ACOSTAMBO', '090702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (890, 1, 87, 3, 'ACRAQUIA', '090703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (891, 1, 87, 3, 'AHUAYCHA', '090704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (892, 1, 87, 3, 'COLCABAMBA', '090705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (893, 1, 87, 3, 'DANIEL HERNANDEZ', '090706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (894, 1, 87, 3, 'HUACHOCOLPA', '090707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (895, 1, 87, 3, 'HUARIBAMBA', '090709');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (896, 1, 87, 3, 'ÑAHUIMPUQUIO', '090710');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (897, 1, 87, 3, 'PAZOS', '090711');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (898, 1, 87, 3, 'QUISHUAR', '090713');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (899, 1, 87, 3, 'SALCABAMBA', '090714');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (900, 1, 87, 3, 'SALCAHUASI', '090715');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (901, 1, 87, 3, 'SAN MARCOS DE ROCCHAC', '090716');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (902, 1, 87, 3, 'SURCUBAMBA', '090717');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (903, 1, 87, 3, 'TINTAY PUNCU', '090718');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (904, 1, 87, 3, 'QUICHUAS', '090719');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (905, 1, 87, 3, 'ANDAYMARCA', '090720');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (906, 1, 87, 3, 'ROBLE', '090721');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (907, 1, 87, 3, 'PICHOS', '090722');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (908, 1, 87, 3, 'SANTIAGO DE TUCUMA', '090723');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (909, 1, 87, 3, 'LAMBRAS', '090724');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (910, 1, 87, 3, 'COCHABAMBA', '090725');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (911, 1, 88, 3, 'HUANUCO', '100101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (912, 1, 88, 3, 'AMARILIS', '100102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (913, 1, 88, 3, 'CHINCHAO', '100103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (914, 1, 88, 3, 'CHURUBAMBA', '100104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (915, 1, 88, 3, 'MARGOS', '100105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (916, 1, 88, 3, 'QUISQUI', '100106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (917, 1, 88, 3, 'SAN FRANCISCO DE CAYRAN', '100107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (918, 1, 88, 3, 'SAN PEDRO DE CHAULAN', '100108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (919, 1, 88, 3, 'SANTA MARIA DEL VALLE', '100109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (920, 1, 88, 3, 'YARUMAYO', '100110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (921, 1, 88, 3, 'PILLCO MARCA', '100111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (922, 1, 88, 3, 'YACUS', '100112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (923, 1, 88, 3, 'SAN PABLO DE PILLAO', '100113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (924, 1, 89, 3, 'AMBO', '100201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (925, 1, 89, 3, 'CAYNA', '100202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (926, 1, 89, 3, 'COLPAS', '100203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (927, 1, 89, 3, 'CONCHAMARCA', '100204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (928, 1, 89, 3, 'HUACAR', '100205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (929, 1, 89, 3, 'SAN FRANCISCO', '100206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (930, 1, 89, 3, 'SAN RAFAEL', '100207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (931, 1, 89, 3, 'TOMAY KICHWA', '100208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (932, 1, 90, 3, 'LA UNION', '100301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (933, 1, 90, 3, 'CHUQUIS', '100307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (934, 1, 90, 3, 'MARIAS', '100311');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (935, 1, 90, 3, 'PACHAS', '100313');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (936, 1, 90, 3, 'QUIVILLA', '100316');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (937, 1, 90, 3, 'RIPAN', '100317');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (938, 1, 90, 3, 'SHUNQUI', '100321');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (939, 1, 90, 3, 'SILLAPATA', '100322');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (940, 1, 90, 3, 'YANAS', '100323');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (941, 1, 91, 3, 'HUACAYBAMBA', '100401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (942, 1, 91, 3, 'CANCHABAMBA', '100402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (943, 1, 91, 3, 'COCHABAMBA', '100403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (944, 1, 91, 3, 'PINRA', '100404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (945, 1, 92, 3, 'LLATA', '100501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (946, 1, 92, 3, 'ARANCAY', '100502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (947, 1, 92, 3, 'CHAVIN DE PARIARCA', '100503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (948, 1, 92, 3, 'JACAS GRANDE', '100504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (949, 1, 92, 3, 'JIRCAN', '100505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (950, 1, 92, 3, 'MIRAFLORES', '100506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (951, 1, 92, 3, 'MONZON', '100507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (952, 1, 92, 3, 'PUNCHAO', '100508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (953, 1, 92, 3, 'PUÑOS', '100509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (954, 1, 92, 3, 'SINGA', '100510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (955, 1, 92, 3, 'TANTAMAYO', '100511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (956, 1, 93, 3, 'RUPA-RUPA', '100601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (957, 1, 93, 3, 'DANIEL ALOMIAS ROBLES', '100602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (958, 1, 93, 3, 'HERMILIO VALDIZAN', '100603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (959, 1, 93, 3, 'JOSE CRESPO Y CASTILLO', '100604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (960, 1, 93, 3, 'LUYANDO', '100605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (961, 1, 93, 3, 'MARIANO DAMASO BERAUN', '100606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (962, 1, 93, 3, 'PUCAYACU', '100607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (963, 1, 93, 3, 'CASTILLO GRANDE', '100608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (964, 1, 93, 3, 'PUEBLO NUEVO', '100609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (965, 1, 93, 3, 'SANTO DOMINGO DE ANDA', '100610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (966, 1, 94, 3, 'HUACRACHUCO', '100701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (967, 1, 94, 3, 'CHOLON', '100702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (968, 1, 94, 3, 'SAN BUENAVENTURA', '100703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (969, 1, 94, 3, 'LA MORADA', '100704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (970, 1, 94, 3, 'SANTA ROSA DE ALTO YANAJANCA', '100705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (971, 1, 95, 3, 'PANAO', '100801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (972, 1, 95, 3, 'CHAGLLA', '100802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (973, 1, 95, 3, 'MOLINO', '100803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (974, 1, 95, 3, 'UMARI', '100804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (975, 1, 96, 3, 'PUERTO INCA', '100901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (976, 1, 96, 3, 'CODO DEL POZUZO', '100902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (977, 1, 96, 3, 'HONORIA', '100903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (978, 1, 96, 3, 'TOURNAVISTA', '100904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (979, 1, 96, 3, 'YUYAPICHIS', '100905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (980, 1, 97, 3, 'JESUS', '101001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (981, 1, 97, 3, 'BAÑOS', '101002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (982, 1, 97, 3, 'JIVIA', '101003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (983, 1, 97, 3, 'QUEROPALCA', '101004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (984, 1, 97, 3, 'RONDOS', '101005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (985, 1, 97, 3, 'SAN FRANCISCO DE ASIS', '101006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (986, 1, 97, 3, 'SAN MIGUEL DE CAURI', '101007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (987, 1, 98, 3, 'CHAVINILLO', '101101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (988, 1, 98, 3, 'CAHUAC', '101102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (989, 1, 98, 3, 'CHACABAMBA', '101103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (990, 1, 98, 3, 'APARICIO POMARES', '101104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (991, 1, 98, 3, 'JACAS CHICO', '101105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (992, 1, 98, 3, 'OBAS', '101106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (993, 1, 98, 3, 'PAMPAMARCA', '101107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (994, 1, 98, 3, 'CHORAS', '101108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (995, 1, 99, 3, 'ICA', '110101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (996, 1, 99, 3, 'LA TINGUIÑA', '110102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (997, 1, 99, 3, 'LOS AQUIJES', '110103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (998, 1, 99, 3, 'OCUCAJE', '110104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (999, 1, 99, 3, 'PACHACUTEC', '110105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1000, 1, 99, 3, 'PUEBLO NUEVO', '110107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1001, 1, 99, 3, 'SALAS', '110108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1002, 1, 99, 3, 'SAN JOSE DE LOS MOLINOS', '110109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1003, 1, 99, 3, 'SAN JUAN BAUTISTA', '110110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1004, 1, 99, 3, 'SANTIAGO', '110111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1005, 1, 99, 3, 'SUBTANJALLA', '110112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1006, 1, 99, 3, 'TATE', '110113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1007, 1, 99, 3, 'YAUCA DEL ROSARIO', '110114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1008, 1, 100, 3, 'CHINCHA ALTA', '110201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1009, 1, 100, 3, 'ALTO LARAN', '110202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1010, 1, 100, 3, 'CHAVIN', '110203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1011, 1, 100, 3, 'CHINCHA BAJA', '110204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1012, 1, 100, 3, 'EL CARMEN', '110205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1013, 1, 100, 3, 'GROCIO PRADO', '110206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1014, 1, 100, 3, 'PUEBLO NUEVO', '110207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1015, 1, 100, 3, 'SAN JUAN DE YANAC', '110208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1016, 1, 100, 3, 'SAN PEDRO DE HUACARPANA', '110209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1017, 1, 100, 3, 'SUNAMPE', '110210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1018, 1, 100, 3, 'TAMBO DE MORA', '110211');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1019, 1, 101, 3, 'NAZCA', '110301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1020, 1, 101, 3, 'CHANGUILLO', '110302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1021, 1, 101, 3, 'EL INGENIO', '110303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1022, 1, 101, 3, 'MARCONA', '110304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1023, 1, 101, 3, 'VISTA ALEGRE', '110305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1024, 1, 102, 3, 'PALPA', '110401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1025, 1, 102, 3, 'LLIPATA', '110402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1026, 1, 102, 3, 'RIO GRANDE', '110403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1027, 1, 102, 3, 'SANTA CRUZ', '110404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1028, 1, 102, 3, 'TIBILLO', '110405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1029, 1, 103, 3, 'PISCO', '110501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1030, 1, 103, 3, 'HUANCANO', '110502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1031, 1, 103, 3, 'HUMAY', '110503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1032, 1, 103, 3, 'INDEPENDENCIA', '110504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1033, 1, 103, 3, 'PARACAS', '110505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1034, 1, 103, 3, 'SAN ANDRES', '110506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1035, 1, 103, 3, 'SAN CLEMENTE', '110507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1036, 1, 103, 3, 'TUPAC AMARU INCA', '110508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1037, 1, 104, 3, 'HUANCAYO', '120101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1038, 1, 104, 3, 'CARHUACALLANGA', '120104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1039, 1, 104, 3, 'CHACAPAMPA', '120105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1040, 1, 104, 3, 'CHICCHE', '120106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1041, 1, 104, 3, 'CHILCA', '120107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1042, 1, 104, 3, 'CHONGOS ALTO', '120108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1043, 1, 104, 3, 'CHUPURO', '120111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1044, 1, 104, 3, 'COLCA', '120112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1045, 1, 104, 3, 'CULLHUAS', '120113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1046, 1, 104, 3, 'EL TAMBO', '120114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1047, 1, 104, 3, 'HUACRAPUQUIO', '120116');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1048, 1, 104, 3, 'HUALHUAS', '120117');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1049, 1, 104, 3, 'HUANCAN', '120119');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1050, 1, 104, 3, 'HUASICANCHA', '120120');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1051, 1, 104, 3, 'HUAYUCACHI', '120121');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1052, 1, 104, 3, 'INGENIO', '120122');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1053, 1, 104, 3, 'PARIAHUANCA', '120124');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1054, 1, 104, 3, 'PILCOMAYO', '120125');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1055, 1, 104, 3, 'PUCARA', '120126');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1056, 1, 104, 3, 'QUICHUAY', '120127');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1057, 1, 104, 3, 'QUILCAS', '120128');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1058, 1, 104, 3, 'SAN AGUSTIN', '120129');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1059, 1, 104, 3, 'SAN JERONIMO DE TUNAN', '120130');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1060, 1, 104, 3, 'SAÑO', '120132');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1061, 1, 104, 3, 'SAPALLANGA', '120133');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1062, 1, 104, 3, 'SICAYA', '120134');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1063, 1, 104, 3, 'SANTO DOMINGO DE ACOBAMBA', '120135');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1064, 1, 104, 3, 'VIQUES', '120136');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1065, 1, 105, 3, 'CONCEPCION', '120201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1066, 1, 105, 3, 'ACO', '120202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1067, 1, 105, 3, 'ANDAMARCA', '120203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1068, 1, 105, 3, 'CHAMBARA', '120204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1069, 1, 105, 3, 'COCHAS', '120205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1070, 1, 105, 3, 'COMAS', '120206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1071, 1, 105, 3, 'HEROINAS TOLEDO', '120207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1072, 1, 105, 3, 'MANZANARES', '120208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1073, 1, 105, 3, 'MARISCAL CASTILLA', '120209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1074, 1, 105, 3, 'MATAHUASI', '120210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1075, 1, 105, 3, 'MITO', '120211');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1076, 1, 105, 3, 'NUEVE DE JULIO', '120212');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1077, 1, 105, 3, 'ORCOTUNA', '120213');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1078, 1, 105, 3, 'SAN JOSE DE QUERO', '120214');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1079, 1, 105, 3, 'SANTA ROSA DE OCOPA', '120215');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1080, 1, 106, 3, 'CHANCHAMAYO', '120301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1081, 1, 106, 3, 'PERENE', '120302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1082, 1, 106, 3, 'PICHANAQUI', '120303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1083, 1, 106, 3, 'SAN LUIS DE SHUARO', '120304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1084, 1, 106, 3, 'SAN RAMON', '120305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1085, 1, 106, 3, 'VITOC', '120306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1086, 1, 107, 3, 'JAUJA', '120401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1087, 1, 107, 3, 'ACOLLA', '120402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1088, 1, 107, 3, 'APATA', '120403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1089, 1, 107, 3, 'ATAURA', '120404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1090, 1, 107, 3, 'CANCHAYLLO', '120405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1091, 1, 107, 3, 'CURICACA', '120406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1092, 1, 107, 3, 'EL MANTARO', '120407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1093, 1, 107, 3, 'HUAMALI', '120408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1094, 1, 107, 3, 'HUARIPAMPA', '120409');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1095, 1, 107, 3, 'HUERTAS', '120410');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1096, 1, 107, 3, 'JANJAILLO', '120411');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1097, 1, 107, 3, 'JULCAN', '120412');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1098, 1, 107, 3, 'LEONOR ORDOÑEZ', '120413');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1099, 1, 107, 3, 'LLOCLLAPAMPA', '120414');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1100, 1, 107, 3, 'MARCO', '120415');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1101, 1, 107, 3, 'MASMA', '120416');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1102, 1, 107, 3, 'MASMA CHICCHE', '120417');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1103, 1, 107, 3, 'MOLINOS', '120418');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1104, 1, 107, 3, 'MONOBAMBA', '120419');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1105, 1, 107, 3, 'MUQUI', '120420');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1106, 1, 107, 3, 'MUQUIYAUYO', '120421');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1107, 1, 107, 3, 'PACA', '120422');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1108, 1, 107, 3, 'PACCHA', '120423');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1109, 1, 107, 3, 'PANCAN', '120424');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1110, 1, 107, 3, 'PARCO', '120425');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1111, 1, 121, 3, 'COCHORCO', '130903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1112, 1, 107, 3, 'POMACANCHA', '120426');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1113, 1, 107, 3, 'RICRAN', '120427');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1114, 1, 107, 3, 'SAN LORENZO', '120428');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1115, 1, 107, 3, 'SAN PEDRO DE CHUNAN', '120429');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1116, 1, 107, 3, 'SAUSA', '120430');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1117, 1, 107, 3, 'SINCOS', '120431');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1118, 1, 107, 3, 'TUNAN MARCA', '120432');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1119, 1, 107, 3, 'YAULI', '120433');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1120, 1, 107, 3, 'YAUYOS', '120434');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1121, 1, 108, 3, 'JUNIN', '120501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1122, 1, 108, 3, 'CARHUAMAYO', '120502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1123, 1, 108, 3, 'ONDORES', '120503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1124, 1, 108, 3, 'ULCUMAYO', '120504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1125, 1, 109, 3, 'SATIPO', '120601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1126, 1, 109, 3, 'COVIRIALI', '120602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1127, 1, 109, 3, 'LLAYLLA', '120603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1128, 1, 109, 3, 'MAZAMARI', '120604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1129, 1, 109, 3, 'PAMPA HERMOSA', '120605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1130, 1, 109, 3, 'PANGOA', '120606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1131, 1, 109, 3, 'RIO NEGRO', '120607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1132, 1, 109, 3, 'RIO TAMBO', '120608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1133, 1, 109, 3, 'VIZCATAN DEL ENE', '120609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1134, 1, 110, 3, 'TARMA', '120701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1135, 1, 110, 3, 'ACOBAMBA', '120702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1136, 1, 110, 3, 'HUARICOLCA', '120703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1137, 1, 110, 3, 'HUASAHUASI', '120704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1138, 1, 110, 3, 'LA UNION', '120705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1139, 1, 110, 3, 'PALCA', '120706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1140, 1, 110, 3, 'PALCAMAYO', '120707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1141, 1, 110, 3, 'SAN PEDRO DE CAJAS', '120708');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1142, 1, 110, 3, 'TAPO', '120709');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1143, 1, 111, 3, 'LA OROYA', '120801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1144, 1, 111, 3, 'CHACAPALPA', '120802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1145, 1, 111, 3, 'HUAY-HUAY', '120803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1146, 1, 111, 3, 'MARCAPOMACOCHA', '120804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1147, 1, 111, 3, 'MOROCOCHA', '120805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1148, 1, 111, 3, 'PACCHA', '120806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1149, 1, 111, 3, 'SANTA BARBARA DE CARHUACAYAN', '120807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1150, 1, 111, 3, 'SANTA ROSA DE SACCO', '120808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1151, 1, 111, 3, 'SUITUCANCHA', '120809');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1152, 1, 111, 3, 'YAULI', '120810');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1153, 1, 112, 3, 'CHUPACA', '120901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1154, 1, 112, 3, 'AHUAC', '120902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1155, 1, 112, 3, 'CHONGOS BAJO', '120903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1156, 1, 112, 3, 'HUACHAC', '120904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1157, 1, 112, 3, 'HUAMANCACA CHICO', '120905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1158, 1, 112, 3, 'SAN JUAN DE YSCOS', '120906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1159, 1, 112, 3, 'SAN JUAN DE JARPA', '120907');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1160, 1, 112, 3, 'TRES DE DICIEMBRE', '120908');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1161, 1, 112, 3, 'YANACANCHA', '120909');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1162, 1, 113, 3, 'TRUJILLO', '130101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1163, 1, 113, 3, 'EL PORVENIR', '130102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1164, 1, 113, 3, 'FLORENCIA DE MORA', '130103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1165, 1, 113, 3, 'HUANCHACO', '130104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1166, 1, 113, 3, 'LA ESPERANZA', '130105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1167, 1, 113, 3, 'LAREDO', '130106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1168, 1, 113, 3, 'MOCHE', '130107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1169, 1, 113, 3, 'POROTO', '130108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1170, 1, 113, 3, 'SALAVERRY', '130109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1171, 1, 113, 3, 'SIMBAL', '130110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1172, 1, 113, 3, 'VICTOR LARCO HERRERA', '130111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1173, 1, 114, 3, 'ASCOPE', '130201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1174, 1, 114, 3, 'CHICAMA', '130202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1175, 1, 114, 3, 'CHOCOPE', '130203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1176, 1, 114, 3, 'MAGDALENA DE CAO', '130204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1177, 1, 114, 3, 'PAIJAN', '130205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1178, 1, 114, 3, 'RAZURI', '130206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1179, 1, 114, 3, 'SANTIAGO DE CAO', '130207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1180, 1, 114, 3, 'CASA GRANDE', '130208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1181, 1, 115, 3, 'BOLIVAR', '130301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1182, 1, 115, 3, 'BAMBAMARCA', '130302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1183, 1, 115, 3, 'CONDORMARCA', '130303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1184, 1, 115, 3, 'LONGOTEA', '130304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1185, 1, 115, 3, 'UCHUMARCA', '130305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1186, 1, 115, 3, 'UCUNCHA', '130306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1187, 1, 116, 3, 'CHEPEN', '130401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1188, 1, 116, 3, 'PACANGA', '130402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1189, 1, 116, 3, 'PUEBLO NUEVO', '130403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1190, 1, 117, 3, 'JULCAN', '130501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1191, 1, 117, 3, 'CALAMARCA', '130502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1192, 1, 117, 3, 'CARABAMBA', '130503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1193, 1, 117, 3, 'HUASO', '130504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1194, 1, 118, 3, 'OTUZCO', '130601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1195, 1, 118, 3, 'AGALLPAMPA', '130602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1196, 1, 118, 3, 'CHARAT', '130604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1197, 1, 118, 3, 'HUARANCHAL', '130605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1198, 1, 118, 3, 'LA CUESTA', '130606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1199, 1, 118, 3, 'MACHE', '130608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1200, 1, 118, 3, 'PARANDAY', '130610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1201, 1, 118, 3, 'SALPO', '130611');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1202, 1, 118, 3, 'SINSICAP', '130613');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1203, 1, 118, 3, 'USQUIL', '130614');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1204, 1, 119, 3, 'SAN PEDRO DE LLOC', '130701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1205, 1, 119, 3, 'GUADALUPE', '130702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1206, 1, 119, 3, 'JEQUETEPEQUE', '130703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1207, 1, 119, 3, 'PACASMAYO', '130704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1208, 1, 119, 3, 'SAN JOSE', '130705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1209, 1, 120, 3, 'TAYABAMBA', '130801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1210, 1, 120, 3, 'BULDIBUYO', '130802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1211, 1, 120, 3, 'CHILLIA', '130803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1212, 1, 120, 3, 'HUANCASPATA', '130804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1213, 1, 120, 3, 'HUAYLILLAS', '130805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1214, 1, 120, 3, 'HUAYO', '130806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1215, 1, 120, 3, 'ONGON', '130807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1216, 1, 120, 3, 'PARCOY', '130808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1217, 1, 120, 3, 'PATAZ', '130809');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1218, 1, 120, 3, 'PIAS', '130810');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1219, 1, 120, 3, 'SANTIAGO DE CHALLAS', '130811');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1220, 1, 120, 3, 'TAURIJA', '130812');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1221, 1, 120, 3, 'URPAY', '130813');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1222, 1, 121, 3, 'HUAMACHUCO', '130901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1223, 1, 121, 3, 'CHUGAY', '130902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1224, 1, 121, 3, 'CURGOS', '130904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1225, 1, 121, 3, 'MARCABAL', '130905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1226, 1, 121, 3, 'SANAGORAN', '130906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1227, 1, 121, 3, 'SARIN', '130907');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1228, 1, 121, 3, 'SARTIMBAMBA', '130908');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1229, 1, 122, 3, 'SANTIAGO DE CHUCO', '131001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1230, 1, 122, 3, 'ANGASMARCA', '131002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1231, 1, 122, 3, 'CACHICADAN', '131003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1232, 1, 122, 3, 'MOLLEBAMBA', '131004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1233, 1, 122, 3, 'MOLLEPATA', '131005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1234, 1, 122, 3, 'QUIRUVILCA', '131006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1235, 1, 122, 3, 'SANTA CRUZ DE CHUCA', '131007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1236, 1, 122, 3, 'SITABAMBA', '131008');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1237, 1, 123, 3, 'CASCAS', '131101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1238, 1, 123, 3, 'LUCMA', '131102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1239, 1, 123, 3, 'MARMOT', '131103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1240, 1, 123, 3, 'SAYAPULLO', '131104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1241, 1, 124, 3, 'VIRU', '131201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1242, 1, 124, 3, 'CHAO', '131202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1243, 1, 124, 3, 'GUADALUPITO', '131203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1244, 1, 125, 3, 'CHICLAYO', '140101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1245, 1, 125, 3, 'CHONGOYAPE', '140102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1246, 1, 125, 3, 'ETEN', '140103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1247, 1, 125, 3, 'ETEN PUERTO', '140104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1248, 1, 125, 3, 'JOSE LEONARDO ORTIZ', '140105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1249, 1, 125, 3, 'LA VICTORIA', '140106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1250, 1, 125, 3, 'LAGUNAS', '140107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1251, 1, 125, 3, 'MONSEFU', '140108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1252, 1, 125, 3, 'NUEVA ARICA', '140109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1253, 1, 125, 3, 'OYOTUN', '140110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1254, 1, 125, 3, 'PICSI', '140111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1255, 1, 125, 3, 'PIMENTEL', '140112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1256, 1, 125, 3, 'REQUE', '140113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1257, 1, 125, 3, 'SANTA ROSA', '140114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1258, 1, 125, 3, 'SAÑA', '140115');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1259, 1, 125, 3, 'CAYALTI', '140116');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1260, 1, 125, 3, 'PATAPO', '140117');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1261, 1, 125, 3, 'POMALCA', '140118');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1262, 1, 125, 3, 'PUCALA', '140119');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1263, 1, 125, 3, 'TUMAN', '140120');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1264, 1, 126, 3, 'FERREÑAFE', '140201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1265, 1, 126, 3, 'CAÑARIS', '140202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1266, 1, 126, 3, 'INCAHUASI', '140203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1267, 1, 126, 3, 'MANUEL ANTONIO MESONES MURO', '140204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1268, 1, 126, 3, 'PITIPO', '140205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1269, 1, 126, 3, 'PUEBLO NUEVO', '140206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1270, 1, 127, 3, 'LAMBAYEQUE', '140301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1271, 1, 127, 3, 'CHOCHOPE', '140302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1272, 1, 127, 3, 'ILLIMO', '140303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1273, 1, 127, 3, 'JAYANCA', '140304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1274, 1, 127, 3, 'MOCHUMI', '140305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1275, 1, 127, 3, 'MORROPE', '140306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1276, 1, 127, 3, 'MOTUPE', '140307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1277, 1, 127, 3, 'OLMOS', '140308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1278, 1, 127, 3, 'PACORA', '140309');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1279, 1, 127, 3, 'SALAS', '140310');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1280, 1, 127, 3, 'SAN JOSE', '140311');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1281, 1, 127, 3, 'TUCUME', '140312');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1282, 1, 128, 3, 'LIMA', '150101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1283, 1, 128, 3, 'ANCON', '150102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1284, 1, 128, 3, 'ATE', '150103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1285, 1, 128, 3, 'BARRANCO', '150104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1286, 1, 128, 3, 'BREÑA', '150105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1287, 1, 128, 3, 'CARABAYLLO', '150106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1288, 1, 128, 3, 'CHACLACAYO', '150107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1289, 1, 128, 3, 'CHORRILLOS', '150108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1290, 1, 128, 3, 'CIENEGUILLA', '150109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1291, 1, 128, 3, 'COMAS', '150110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1292, 1, 128, 3, 'EL AGUSTINO', '150111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1293, 1, 128, 3, 'INDEPENDENCIA', '150112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1294, 1, 128, 3, 'JESUS MARIA', '150113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1295, 1, 128, 3, 'LA MOLINA', '150114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1296, 1, 128, 3, 'LA VICTORIA', '150115');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1297, 1, 128, 3, 'LINCE', '150116');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1298, 1, 128, 3, 'LOS OLIVOS', '150117');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1299, 1, 128, 3, 'LURIGANCHO', '150118');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1300, 1, 128, 3, 'LURIN', '150119');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1301, 1, 128, 3, 'MAGDALENA DEL MAR', '150120');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1302, 1, 128, 3, 'PUEBLO LIBRE', '150121');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1303, 1, 128, 3, 'MIRAFLORES', '150122');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1304, 1, 128, 3, 'PACHACAMAC', '150123');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1305, 1, 128, 3, 'PUCUSANA', '150124');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1306, 1, 128, 3, 'PUENTE PIEDRA', '150125');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1307, 1, 128, 3, 'PUNTA HERMOSA', '150126');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1308, 1, 128, 3, 'PUNTA NEGRA', '150127');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1309, 1, 128, 3, 'RIMAC', '150128');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1310, 1, 128, 3, 'SAN BARTOLO', '150129');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1311, 1, 128, 3, 'SAN BORJA', '150130');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1312, 1, 128, 3, 'SAN ISIDRO', '150131');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1313, 1, 128, 3, 'SAN JUAN DE LURIGANCHO', '150132');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1314, 1, 128, 3, 'SAN JUAN DE MIRAFLORES', '150133');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1315, 1, 128, 3, 'SAN LUIS', '150134');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1316, 1, 128, 3, 'SAN MARTIN DE PORRES', '150135');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1317, 1, 128, 3, 'SAN MIGUEL', '150136');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1318, 1, 128, 3, 'SANTA ANITA', '150137');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1319, 1, 128, 3, 'SANTA MARIA DEL MAR', '150138');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1320, 1, 128, 3, 'SANTA ROSA', '150139');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1321, 1, 128, 3, 'SANTIAGO DE SURCO', '150140');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1322, 1, 128, 3, 'SURQUILLO', '150141');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1323, 1, 128, 3, 'VILLA EL SALVADOR', '150142');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1324, 1, 128, 3, 'VILLA MARIA DEL TRIUNFO', '150143');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1325, 1, 128, 3, 'SANTA MARIA DE HUACHIPA', '150144');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1326, 1, 129, 3, 'BARRANCA', '150201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1327, 1, 129, 3, 'PARAMONGA', '150202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1328, 1, 129, 3, 'PATIVILCA', '150203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1329, 1, 129, 3, 'SUPE', '150204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1330, 1, 129, 3, 'SUPE PUERTO', '150205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1331, 1, 130, 3, 'CAJATAMBO', '150301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1332, 1, 130, 3, 'COPA', '150302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1333, 1, 130, 3, 'GORGOR', '150303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1334, 1, 130, 3, 'HUANCAPON', '150304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1335, 1, 130, 3, 'MANAS', '150305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1336, 1, 131, 3, 'CANTA', '150401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1337, 1, 131, 3, 'ARAHUAY', '150402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1338, 1, 131, 3, 'HUAMANTANGA', '150403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1339, 1, 131, 3, 'HUAROS', '150404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1340, 1, 131, 3, 'LACHAQUI', '150405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1341, 1, 131, 3, 'SAN BUENAVENTURA', '150406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1342, 1, 131, 3, 'SANTA ROSA DE QUIVES', '150407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1343, 1, 132, 3, 'SAN VICENTE DE CAÑETE', '150501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1344, 1, 132, 3, 'ASIA', '150502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1345, 1, 132, 3, 'CALANGO', '150503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1346, 1, 132, 3, 'CERRO AZUL', '150504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1347, 1, 132, 3, 'CHILCA', '150505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1348, 1, 132, 3, 'COAYLLO', '150506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1349, 1, 132, 3, 'IMPERIAL', '150507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1350, 1, 132, 3, 'LUNAHUANA', '150508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1351, 1, 132, 3, 'MALA', '150509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1352, 1, 132, 3, 'NUEVO IMPERIAL', '150510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1353, 1, 132, 3, 'PACARAN', '150511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1354, 1, 132, 3, 'QUILMANA', '150512');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1355, 1, 132, 3, 'SAN ANTONIO', '150513');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1356, 1, 132, 3, 'SAN LUIS', '150514');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1357, 1, 132, 3, 'SANTA CRUZ DE FLORES', '150515');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1358, 1, 132, 3, 'ZUÑIGA', '150516');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1359, 1, 133, 3, 'HUARAL', '150601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1360, 1, 133, 3, 'ATAVILLOS ALTO', '150602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1361, 1, 133, 3, 'ATAVILLOS BAJO', '150603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1362, 1, 133, 3, 'AUCALLAMA', '150604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1363, 1, 133, 3, 'CHANCAY', '150605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1364, 1, 133, 3, 'IHUARI', '150606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1365, 1, 133, 3, 'LAMPIAN', '150607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1366, 1, 133, 3, 'PACARAOS', '150608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1367, 1, 133, 3, 'SAN MIGUEL DE ACOS', '150609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1368, 1, 133, 3, 'SANTA CRUZ DE ANDAMARCA', '150610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1369, 1, 133, 3, 'SUMBILCA', '150611');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1370, 1, 133, 3, 'VEINTISIETE DE NOVIEMBRE', '150612');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1371, 1, 134, 3, 'MATUCANA', '150701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1372, 1, 134, 3, 'ANTIOQUIA', '150702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1373, 1, 134, 3, 'CALLAHUANCA', '150703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1374, 1, 134, 3, 'CARAMPOMA', '150704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1375, 1, 134, 3, 'CHICLA', '150705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1376, 1, 134, 3, 'CUENCA', '150706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1377, 1, 134, 3, 'HUACHUPAMPA', '150707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1378, 1, 134, 3, 'HUANZA', '150708');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1379, 1, 134, 3, 'HUAROCHIRI', '150709');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1380, 1, 134, 3, 'LAHUAYTAMBO', '150710');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1381, 1, 134, 3, 'LANGA', '150711');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1382, 1, 134, 3, 'LARAOS', '150712');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1383, 1, 134, 3, 'MARIATANA', '150713');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1384, 1, 134, 3, 'RICARDO PALMA', '150714');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1385, 1, 134, 3, 'SAN ANDRES DE TUPICOCHA', '150715');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1386, 1, 134, 3, 'SAN ANTONIO', '150716');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1387, 1, 134, 3, 'SAN BARTOLOME', '150717');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1388, 1, 134, 3, 'SAN DAMIAN', '150718');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1389, 1, 134, 3, 'SAN JUAN DE IRIS', '150719');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1390, 1, 134, 3, 'SAN JUAN DE TANTARANCHE', '150720');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1391, 1, 134, 3, 'SAN LORENZO DE QUINTI', '150721');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1392, 1, 134, 3, 'SAN MATEO', '150722');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1393, 1, 134, 3, 'SAN MATEO DE OTAO', '150723');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1394, 1, 134, 3, 'SAN PEDRO DE CASTA', '150724');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1395, 1, 134, 3, 'SAN PEDRO DE HUANCAYRE', '150725');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1396, 1, 134, 3, 'SANGALLAYA', '150726');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1397, 1, 134, 3, 'SANTA CRUZ DE COCACHACRA', '150727');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1398, 1, 134, 3, 'SANTA EULALIA', '150728');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1399, 1, 134, 3, 'SANTIAGO DE ANCHUCAYA', '150729');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1400, 1, 134, 3, 'SANTIAGO DE TUNA', '150730');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1401, 1, 134, 3, 'SANTO DOMINGO DE LOS OLLEROS', '150731');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1402, 1, 134, 3, 'SURCO', '150732');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1403, 1, 135, 3, 'HUACHO', '150801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1404, 1, 135, 3, 'AMBAR', '150802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1405, 1, 135, 3, 'CALETA DE CARQUIN', '150803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1406, 1, 135, 3, 'CHECRAS', '150804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1407, 1, 135, 3, 'HUALMAY', '150805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1408, 1, 135, 3, 'HUAURA', '150806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1409, 1, 135, 3, 'LEONCIO PRADO', '150807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1410, 1, 135, 3, 'PACCHO', '150808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1411, 1, 135, 3, 'SANTA LEONOR', '150809');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1412, 1, 135, 3, 'SANTA MARIA', '150810');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1413, 1, 135, 3, 'SAYAN', '150811');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1414, 1, 135, 3, 'VEGUETA', '150812');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1415, 1, 136, 3, 'OYON', '150901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1416, 1, 136, 3, 'ANDAJES', '150902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1417, 1, 136, 3, 'CAUJUL', '150903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1418, 1, 136, 3, 'COCHAMARCA', '150904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1419, 1, 136, 3, 'NAVAN', '150905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1420, 1, 136, 3, 'PACHANGARA', '150906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1421, 1, 137, 3, 'YAUYOS', '151001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1422, 1, 137, 3, 'ALIS', '151002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1423, 1, 137, 3, 'AYAUCA', '151003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1424, 1, 137, 3, 'AYAVIRI', '151004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1425, 1, 137, 3, 'AZANGARO', '151005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1426, 1, 137, 3, 'CACRA', '151006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1427, 1, 137, 3, 'CARANIA', '151007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1428, 1, 137, 3, 'CATAHUASI', '151008');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1429, 1, 137, 3, 'CHOCOS', '151009');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1430, 1, 137, 3, 'COCHAS', '151010');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1431, 1, 137, 3, 'COLONIA', '151011');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1432, 1, 137, 3, 'HONGOS', '151012');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1433, 1, 137, 3, 'HUAMPARA', '151013');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1434, 1, 137, 3, 'HUANCAYA', '151014');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1435, 1, 137, 3, 'HUANGASCAR', '151015');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1436, 1, 137, 3, 'HUANTAN', '151016');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1437, 1, 137, 3, 'HUAÑEC', '151017');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1438, 1, 137, 3, 'LARAOS', '151018');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1439, 1, 137, 3, 'LINCHA', '151019');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1440, 1, 137, 3, 'MADEAN', '151020');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1441, 1, 137, 3, 'MIRAFLORES', '151021');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1442, 1, 137, 3, 'OMAS', '151022');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1443, 1, 137, 3, 'PUTINZA', '151023');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1444, 1, 137, 3, 'QUINCHES', '151024');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1445, 1, 137, 3, 'QUINOCAY', '151025');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1446, 1, 137, 3, 'SAN JOAQUIN', '151026');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1447, 1, 137, 3, 'SAN PEDRO DE PILAS', '151027');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1448, 1, 137, 3, 'TANTA', '151028');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1449, 1, 137, 3, 'TAURIPAMPA', '151029');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1450, 1, 137, 3, 'TOMAS', '151030');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1451, 1, 137, 3, 'TUPE', '151031');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1452, 1, 137, 3, 'VIÑAC', '151032');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1453, 1, 137, 3, 'VITIS', '151033');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1454, 1, 138, 3, 'IQUITOS', '160101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1455, 1, 138, 3, 'ALTO NANAY', '160102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1456, 1, 138, 3, 'FERNANDO LORES', '160103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1457, 1, 138, 3, 'INDIANA', '160104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1458, 1, 138, 3, 'LAS AMAZONAS', '160105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1459, 1, 138, 3, 'MAZAN', '160106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1460, 1, 138, 3, 'NAPO', '160107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1461, 1, 138, 3, 'PUNCHANA', '160108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1462, 1, 138, 3, 'PUTUMAYO', '160109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1463, 1, 138, 3, 'TORRES CAUSANA', '160110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1464, 1, 138, 3, 'BELEN', '160112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1465, 1, 138, 3, 'SAN JUAN BAUTISTA', '160113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1466, 1, 138, 3, 'TENIENTE MANUEL CLAVERO', '160114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1467, 1, 139, 3, 'YURIMAGUAS', '160201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1468, 1, 139, 3, 'BALSAPUERTO', '160202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1469, 1, 139, 3, 'JEBEROS', '160205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1470, 1, 139, 3, 'LAGUNAS', '160206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1471, 1, 139, 3, 'SANTA CRUZ', '160210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1472, 1, 139, 3, 'TENIENTE CESAR LOPEZ ROJAS', '160211');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1473, 1, 140, 3, 'NAUTA', '160301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1474, 1, 140, 3, 'PARINARI', '160302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1475, 1, 140, 3, 'TIGRE', '160303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1476, 1, 140, 3, 'TROMPETEROS', '160304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1477, 1, 140, 3, 'URARINAS', '160305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1478, 1, 141, 3, 'RAMON CASTILLA', '160401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1479, 1, 141, 3, 'PEBAS', '160402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1480, 1, 141, 3, 'YAVARI', '160403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1481, 1, 141, 3, 'SAN PABLO', '160404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1482, 1, 142, 3, 'REQUENA', '160501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1483, 1, 142, 3, 'ALTO TAPICHE', '160502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1484, 1, 142, 3, 'CAPELO', '160503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1485, 1, 142, 3, 'EMILIO SAN MARTIN', '160504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1486, 1, 142, 3, 'MAQUIA', '160505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1487, 1, 142, 3, 'PUINAHUA', '160506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1488, 1, 142, 3, 'SAQUENA', '160507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1489, 1, 142, 3, 'SOPLIN', '160508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1490, 1, 142, 3, 'TAPICHE', '160509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1491, 1, 142, 3, 'JENARO HERRERA', '160510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1492, 1, 142, 3, 'YAQUERANA', '160511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1493, 1, 143, 3, 'CONTAMANA', '160601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1494, 1, 143, 3, 'INAHUAYA', '160602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1495, 1, 143, 3, 'PADRE MARQUEZ', '160603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1496, 1, 143, 3, 'PAMPA HERMOSA', '160604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1497, 1, 143, 3, 'SARAYACU', '160605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1498, 1, 143, 3, 'VARGAS GUERRA', '160606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1499, 1, 144, 3, 'BARRANCA', '160701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1500, 1, 144, 3, 'CAHUAPANAS', '160702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1501, 1, 144, 3, 'MANSERICHE', '160703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1502, 1, 144, 3, 'MORONA', '160704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1503, 1, 144, 3, 'PASTAZA', '160705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1504, 1, 144, 3, 'ANDOAS', '160706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1505, 1, 145, 3, 'PUTUMAYO', '160801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1506, 1, 145, 3, 'ROSA PANDURO', '160802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1507, 1, 145, 3, 'TENIENTE MANUEL CLAVERO', '160803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1508, 1, 145, 3, 'YAGUAS', '160804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1509, 1, 146, 3, 'TAMBOPATA', '170101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1510, 1, 146, 3, 'INAMBARI', '170102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1511, 1, 146, 3, 'LAS PIEDRAS', '170103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1512, 1, 146, 3, 'LABERINTO', '170104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1513, 1, 147, 3, 'MANU', '170201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1514, 1, 147, 3, 'FITZCARRALD', '170202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1515, 1, 147, 3, 'MADRE DE DIOS', '170203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1516, 1, 147, 3, 'HUEPETUHE', '170204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1517, 1, 148, 3, 'IÑAPARI', '170301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1518, 1, 148, 3, 'IBERIA', '170302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1519, 1, 148, 3, 'TAHUAMANU', '170303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1520, 1, 149, 3, 'MOQUEGUA', '180101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1521, 1, 149, 3, 'CARUMAS', '180102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1522, 1, 149, 3, 'CUCHUMBAYA', '180103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1523, 1, 149, 3, 'SAMEGUA', '180104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1524, 1, 149, 3, 'SAN CRISTOBAL', '180105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1525, 1, 149, 3, 'TORATA', '180106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1526, 1, 150, 3, 'OMATE', '180201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1527, 1, 150, 3, 'CHOJATA', '180202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1528, 1, 150, 3, 'COALAQUE', '180203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1529, 1, 150, 3, 'ICHUÑA', '180204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1530, 1, 150, 3, 'LA CAPILLA', '180205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1531, 1, 150, 3, 'LLOQUE', '180206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1532, 1, 150, 3, 'MATALAQUE', '180207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1533, 1, 150, 3, 'PUQUINA', '180208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1534, 1, 150, 3, 'QUINISTAQUILLAS', '180209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1535, 1, 150, 3, 'UBINAS', '180210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1536, 1, 150, 3, 'YUNGA', '180211');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1537, 1, 151, 3, 'ILO', '180301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1538, 1, 151, 3, 'EL ALGARROBAL', '180302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1539, 1, 151, 3, 'PACOCHA', '180303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1540, 1, 152, 3, 'CHAUPIMARCA', '190101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1541, 1, 152, 3, 'HUACHON', '190102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1542, 1, 152, 3, 'HUARIACA', '190103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1543, 1, 152, 3, 'HUAYLLAY', '190104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1544, 1, 152, 3, 'NINACACA', '190105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1545, 1, 152, 3, 'PALLANCHACRA', '190106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1546, 1, 152, 3, 'PAUCARTAMBO', '190107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1547, 1, 152, 3, 'SAN FRANCISCO DE ASIS DE YARUSYACAN', '190108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1548, 1, 152, 3, 'SIMON BOLIVAR', '190109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1549, 1, 152, 3, 'TICLACAYAN', '190110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1550, 1, 152, 3, 'TINYAHUARCO', '190111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1551, 1, 152, 3, 'VICCO', '190112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1552, 1, 152, 3, 'YANACANCHA', '190113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1553, 1, 153, 3, 'YANAHUANCA', '190201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1554, 1, 153, 3, 'CHACAYAN', '190202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1555, 1, 153, 3, 'GOYLLARISQUIZGA', '190203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1556, 1, 153, 3, 'PAUCAR', '190204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1557, 1, 153, 3, 'SAN PEDRO DE PILLAO', '190205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1558, 1, 153, 3, 'SANTA ANA DE TUSI', '190206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1559, 1, 153, 3, 'TAPUC', '190207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1560, 1, 153, 3, 'VILCABAMBA', '190208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1561, 1, 154, 3, 'OXAPAMPA', '190301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1562, 1, 154, 3, 'CHONTABAMBA', '190302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1563, 1, 154, 3, 'HUANCABAMBA', '190303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1564, 1, 154, 3, 'PALCAZU', '190304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1565, 1, 154, 3, 'POZUZO', '190305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1566, 1, 154, 3, 'PUERTO BERMUDEZ', '190306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1567, 1, 154, 3, 'VILLA RICA', '190307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1568, 1, 154, 3, 'CONSTITUCION', '190308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1569, 1, 155, 3, 'PIURA', '200101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1570, 1, 155, 3, 'CASTILLA', '200104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1571, 1, 155, 3, 'CATACAOS', '200105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1572, 1, 155, 3, 'CURA MORI', '200107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1573, 1, 155, 3, 'EL TALLAN', '200108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1574, 1, 155, 3, 'LA ARENA', '200109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1575, 1, 155, 3, 'LA UNION', '200110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1576, 1, 155, 3, 'LAS LOMAS', '200111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1577, 1, 155, 3, 'TAMBO GRANDE', '200114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1578, 1, 155, 3, 'VEINTISEIS DE OCTUBRE', '200115');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1579, 1, 156, 3, 'AYABACA', '200201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1580, 1, 156, 3, 'FRIAS', '200202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1581, 1, 156, 3, 'JILILI', '200203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1582, 1, 156, 3, 'LAGUNAS', '200204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1583, 1, 156, 3, 'MONTERO', '200205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1584, 1, 156, 3, 'PACAIPAMPA', '200206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1585, 1, 156, 3, 'PAIMAS', '200207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1586, 1, 156, 3, 'SAPILLICA', '200208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1587, 1, 156, 3, 'SICCHEZ', '200209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1588, 1, 156, 3, 'SUYO', '200210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1589, 1, 157, 3, 'HUANCABAMBA', '200301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1590, 1, 157, 3, 'CANCHAQUE', '200302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1591, 1, 157, 3, 'EL CARMEN DE LA FRONTERA', '200303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1592, 1, 157, 3, 'HUARMACA', '200304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1593, 1, 157, 3, 'LALAQUIZ', '200305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1594, 1, 157, 3, 'SAN MIGUEL DE EL FAIQUE', '200306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1595, 1, 157, 3, 'SONDOR', '200307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1596, 1, 157, 3, 'SONDORILLO', '200308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1597, 1, 158, 3, 'CHULUCANAS', '200401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1598, 1, 158, 3, 'BUENOS AIRES', '200402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1599, 1, 158, 3, 'CHALACO', '200403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1600, 1, 158, 3, 'LA MATANZA', '200404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1601, 1, 158, 3, 'MORROPON', '200405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1602, 1, 158, 3, 'SALITRAL', '200406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1603, 1, 158, 3, 'SAN JUAN DE BIGOTE', '200407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1604, 1, 158, 3, 'SANTA CATALINA DE MOSSA', '200408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1605, 1, 158, 3, 'SANTO DOMINGO', '200409');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1606, 1, 158, 3, 'YAMANGO', '200410');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1607, 1, 159, 3, 'PAITA', '200501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1608, 1, 159, 3, 'AMOTAPE', '200502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1609, 1, 159, 3, 'ARENAL', '200503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1610, 1, 159, 3, 'COLAN', '200504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1611, 1, 159, 3, 'LA HUACA', '200505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1612, 1, 159, 3, 'TAMARINDO', '200506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1613, 1, 159, 3, 'VICHAYAL', '200507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1614, 1, 160, 3, 'SULLANA', '200601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1615, 1, 160, 3, 'BELLAVISTA', '200602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1616, 1, 160, 3, 'IGNACIO ESCUDERO', '200603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1617, 1, 160, 3, 'LANCONES', '200604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1618, 1, 160, 3, 'MARCAVELICA', '200605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1619, 1, 160, 3, 'MIGUEL CHECA', '200606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1620, 1, 160, 3, 'QUERECOTILLO', '200607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1621, 1, 160, 3, 'SALITRAL', '200608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1622, 1, 161, 3, 'PARIÑAS', '200701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1623, 1, 161, 3, 'EL ALTO', '200702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1624, 1, 161, 3, 'LA BREA', '200703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1625, 1, 161, 3, 'LOBITOS', '200704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1626, 1, 161, 3, 'LOS ORGANOS', '200705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1627, 1, 161, 3, 'MANCORA', '200706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1628, 1, 162, 3, 'SECHURA', '200801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1629, 1, 162, 3, 'BELLAVISTA DE LA UNION', '200802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1630, 1, 162, 3, 'BERNAL', '200803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1631, 1, 162, 3, 'CRISTO NOS VALGA', '200804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1632, 1, 162, 3, 'VICE', '200805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1633, 1, 162, 3, 'RINCONADA LLICUAR', '200806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1634, 1, 163, 3, 'PUNO', '210101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1635, 1, 163, 3, 'ACORA', '210102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1636, 1, 163, 3, 'AMANTANI', '210103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1637, 1, 163, 3, 'ATUNCOLLA', '210104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1638, 1, 163, 3, 'CAPACHICA', '210105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1639, 1, 163, 3, 'CHUCUITO', '210106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1640, 1, 163, 3, 'COATA', '210107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1641, 1, 163, 3, 'HUATA', '210108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1642, 1, 163, 3, 'MAÑAZO', '210109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1643, 1, 163, 3, 'PAUCARCOLLA', '210110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1644, 1, 163, 3, 'PICHACANI', '210111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1645, 1, 163, 3, 'PLATERIA', '210112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1646, 1, 163, 3, 'SAN ANTONIO', '210113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1647, 1, 163, 3, 'TIQUILLACA', '210114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1648, 1, 163, 3, 'VILQUE', '210115');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1649, 1, 164, 3, 'AZANGARO', '210201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1650, 1, 164, 3, 'ACHAYA', '210202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1651, 1, 164, 3, 'ARAPA', '210203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1652, 1, 164, 3, 'ASILLO', '210204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1653, 1, 164, 3, 'CAMINACA', '210205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1654, 1, 164, 3, 'CHUPA', '210206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1655, 1, 164, 3, 'JOSE DOMINGO CHOQUEHUANCA', '210207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1656, 1, 164, 3, 'MUÑANI', '210208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1657, 1, 164, 3, 'POTONI', '210209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1658, 1, 164, 3, 'SAMAN', '210210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1659, 1, 164, 3, 'SAN ANTON', '210211');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1660, 1, 164, 3, 'SAN JOSE', '210212');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1661, 1, 164, 3, 'SAN JUAN DE SALINAS', '210213');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1662, 1, 164, 3, 'SANTIAGO DE PUPUJA', '210214');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1663, 1, 164, 3, 'TIRAPATA', '210215');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1664, 1, 165, 3, 'MACUSANI', '210301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1665, 1, 165, 3, 'AJOYANI', '210302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1666, 1, 165, 3, 'AYAPATA', '210303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1667, 1, 165, 3, 'COASA', '210304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1668, 1, 165, 3, 'CORANI', '210305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1669, 1, 165, 3, 'CRUCERO', '210306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1670, 1, 165, 3, 'ITUATA', '210307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1671, 1, 165, 3, 'OLLACHEA', '210308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1672, 1, 165, 3, 'SAN GABAN', '210309');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1673, 1, 165, 3, 'USICAYOS', '210310');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1674, 1, 166, 3, 'JULI', '210401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1675, 1, 166, 3, 'DESAGUADERO', '210402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1676, 1, 166, 3, 'HUACULLANI', '210403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1677, 1, 166, 3, 'KELLUYO', '210404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1678, 1, 166, 3, 'PISACOMA', '210405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1679, 1, 166, 3, 'POMATA', '210406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1680, 1, 166, 3, 'ZEPITA', '210407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1681, 1, 167, 3, 'ILAVE', '210501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1682, 1, 167, 3, 'CAPAZO', '210502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1683, 1, 167, 3, 'PILCUYO', '210503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1684, 1, 167, 3, 'SANTA ROSA', '210504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1685, 1, 167, 3, 'CONDURIRI', '210505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1686, 1, 168, 3, 'HUANCANE', '210601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1687, 1, 168, 3, 'COJATA', '210602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1688, 1, 168, 3, 'HUATASANI', '210603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1689, 1, 168, 3, 'INCHUPALLA', '210604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1690, 1, 168, 3, 'PUSI', '210605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1691, 1, 168, 3, 'ROSASPATA', '210606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1692, 1, 168, 3, 'TARACO', '210607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1693, 1, 168, 3, 'VILQUE CHICO', '210608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1694, 1, 169, 3, 'LAMPA', '210701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1695, 1, 169, 3, 'CABANILLA', '210702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1696, 1, 169, 3, 'CALAPUJA', '210703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1697, 1, 169, 3, 'NICASIO', '210704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1698, 1, 169, 3, 'OCUVIRI', '210705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1699, 1, 169, 3, 'PALCA', '210706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1700, 1, 169, 3, 'PARATIA', '210707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1701, 1, 169, 3, 'PUCARA', '210708');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1702, 1, 169, 3, 'SANTA LUCIA', '210709');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1703, 1, 169, 3, 'VILAVILA', '210710');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1704, 1, 170, 3, 'AYAVIRI', '210801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1705, 1, 170, 3, 'ANTAUTA', '210802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1706, 1, 170, 3, 'CUPI', '210803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1707, 1, 170, 3, 'LLALLI', '210804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1708, 1, 170, 3, 'MACARI', '210805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1709, 1, 170, 3, 'NUÑOA', '210806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1710, 1, 170, 3, 'ORURILLO', '210807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1711, 1, 170, 3, 'SANTA ROSA', '210808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1712, 1, 170, 3, 'UMACHIRI', '210809');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1713, 1, 171, 3, 'MOHO', '210901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1714, 1, 171, 3, 'CONIMA', '210902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1715, 1, 171, 3, 'HUAYRAPATA', '210903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1716, 1, 171, 3, 'TILALI', '210904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1717, 1, 172, 3, 'PUTINA', '211001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1718, 1, 172, 3, 'ANANEA', '211002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1719, 1, 172, 3, 'PEDRO VILCA APAZA', '211003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1720, 1, 172, 3, 'QUILCAPUNCU', '211004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1721, 1, 172, 3, 'SINA', '211005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1722, 1, 173, 3, 'JULIACA', '211101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1723, 1, 173, 3, 'CABANA', '211102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1724, 1, 173, 3, 'CABANILLAS', '211103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1725, 1, 173, 3, 'CARACOTO', '211104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1726, 1, 173, 3, 'SAN MIGUEL', '211105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1727, 1, 174, 3, 'SANDIA', '211201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1728, 1, 174, 3, 'CUYOCUYO', '211202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1729, 1, 174, 3, 'LIMBANI', '211203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1730, 1, 174, 3, 'PATAMBUCO', '211204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1731, 1, 174, 3, 'PHARA', '211205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1732, 1, 174, 3, 'QUIACA', '211206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1733, 1, 174, 3, 'SAN JUAN DEL ORO', '211207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1734, 1, 174, 3, 'YANAHUAYA', '211208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1735, 1, 174, 3, 'ALTO INAMBARI', '211209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1736, 1, 174, 3, 'SAN PEDRO DE PUTINA PUNCO', '211210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1737, 1, 175, 3, 'YUNGUYO', '211301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1738, 1, 175, 3, 'ANAPIA', '211302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1739, 1, 175, 3, 'COPANI', '211303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1740, 1, 175, 3, 'CUTURAPI', '211304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1741, 1, 175, 3, 'OLLARAYA', '211305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1742, 1, 175, 3, 'TINICACHI', '211306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1743, 1, 175, 3, 'UNICACHI', '211307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1744, 1, 176, 3, 'MOYOBAMBA', '220101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1745, 1, 176, 3, 'CALZADA', '220102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1746, 1, 176, 3, 'HABANA', '220103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1747, 1, 176, 3, 'JEPELACIO', '220104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1748, 1, 176, 3, 'SORITOR', '220105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1749, 1, 176, 3, 'YANTALO', '220106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1750, 1, 177, 3, 'BELLAVISTA', '220201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1751, 1, 177, 3, 'ALTO BIAVO', '220202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1752, 1, 177, 3, 'BAJO BIAVO', '220203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1753, 1, 177, 3, 'HUALLAGA', '220204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1754, 1, 177, 3, 'SAN PABLO', '220205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1755, 1, 177, 3, 'SAN RAFAEL', '220206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1756, 1, 178, 3, 'SAN JOSE DE SISA', '220301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1757, 1, 178, 3, 'AGUA BLANCA', '220302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1758, 1, 178, 3, 'SAN MARTIN', '220303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1759, 1, 178, 3, 'SANTA ROSA', '220304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1760, 1, 178, 3, 'SHATOJA', '220305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1761, 1, 179, 3, 'SAPOSOA', '220401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1762, 1, 179, 3, 'ALTO SAPOSOA', '220402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1763, 1, 179, 3, 'EL ESLABON', '220403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1764, 1, 179, 3, 'PISCOYACU', '220404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1765, 1, 179, 3, 'SACANCHE', '220405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1766, 1, 179, 3, 'TINGO DE SAPOSOA', '220406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1767, 1, 180, 3, 'LAMAS', '220501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1768, 1, 180, 3, 'ALONSO DE ALVARADO', '220502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1769, 1, 180, 3, 'BARRANQUITA', '220503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1770, 1, 180, 3, 'CAYNARACHI', '220504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1771, 1, 180, 3, 'CUÑUMBUQUI', '220505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1772, 1, 180, 3, 'PINTO RECODO', '220506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1773, 1, 180, 3, 'RUMISAPA', '220507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1774, 1, 180, 3, 'SAN ROQUE DE CUMBAZA', '220508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1775, 1, 180, 3, 'SHANAO', '220509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1776, 1, 180, 3, 'TABALOSOS', '220510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1777, 1, 180, 3, 'ZAPATERO', '220511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1778, 1, 181, 3, 'JUANJUI', '220601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1779, 1, 181, 3, 'CAMPANILLA', '220602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1780, 1, 181, 3, 'HUICUNGO', '220603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1781, 1, 181, 3, 'PACHIZA', '220604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1782, 1, 181, 3, 'PAJARILLO', '220605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1783, 1, 182, 3, 'PICOTA', '220701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1784, 1, 182, 3, 'BUENOS AIRES', '220702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1785, 1, 182, 3, 'CASPISAPA', '220703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1786, 1, 182, 3, 'PILLUANA', '220704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1787, 1, 182, 3, 'PUCACACA', '220705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1788, 1, 182, 3, 'SAN CRISTOBAL', '220706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1789, 1, 182, 3, 'SAN HILARION', '220707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1790, 1, 182, 3, 'SHAMBOYACU', '220708');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1791, 1, 182, 3, 'TINGO DE PONASA', '220709');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1792, 1, 182, 3, 'TRES UNIDOS', '220710');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1793, 1, 183, 3, 'RIOJA', '220801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1794, 1, 183, 3, 'AWAJUN', '220802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1795, 1, 183, 3, 'ELIAS SOPLIN VARGAS', '220803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1796, 1, 183, 3, 'NUEVA CAJAMARCA', '220804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1797, 1, 183, 3, 'PARDO MIGUEL', '220805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1798, 1, 183, 3, 'POSIC', '220806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1799, 1, 183, 3, 'SAN FERNANDO', '220807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1800, 1, 183, 3, 'YORONGOS', '220808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1801, 1, 183, 3, 'YURACYACU', '220809');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1802, 1, 184, 3, 'TARAPOTO', '220901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1803, 1, 184, 3, 'ALBERTO LEVEAU', '220902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1804, 1, 184, 3, 'CACATACHI', '220903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1805, 1, 184, 3, 'CHAZUTA', '220904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1806, 1, 184, 3, 'CHIPURANA', '220905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1807, 1, 184, 3, 'EL PORVENIR', '220906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1808, 1, 184, 3, 'HUIMBAYOC', '220907');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1809, 1, 184, 3, 'JUAN GUERRA', '220908');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1810, 1, 184, 3, 'LA BANDA DE SHILCAYO', '220909');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1811, 1, 184, 3, 'MORALES', '220910');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1812, 1, 184, 3, 'PAPAPLAYA', '220911');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1813, 1, 184, 3, 'SAN ANTONIO', '220912');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1814, 1, 184, 3, 'SAUCE', '220913');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1815, 1, 184, 3, 'SHAPAJA', '220914');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1816, 1, 185, 3, 'TOCACHE', '221001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1817, 1, 185, 3, 'NUEVO PROGRESO', '221002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1818, 1, 185, 3, 'POLVORA', '221003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1819, 1, 185, 3, 'SHUNTE', '221004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1820, 1, 185, 3, 'UCHIZA', '221005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1821, 1, 185, 3, 'SANTA LUCIA', '221006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1822, 1, 186, 3, 'TACNA', '230101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1823, 1, 186, 3, 'ALTO DE LA ALIANZA', '230102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1824, 1, 186, 3, 'CALANA', '230103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1825, 1, 186, 3, 'CIUDAD NUEVA', '230104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1826, 1, 186, 3, 'INCLAN', '230105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1827, 1, 186, 3, 'PACHIA', '230106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1828, 1, 186, 3, 'PALCA', '230107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1829, 1, 186, 3, 'POCOLLAY', '230108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1830, 1, 186, 3, 'SAMA', '230109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1831, 1, 186, 3, 'CORONEL GREGORIO ALBARRACIN LANCHIPA', '230110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1832, 1, 186, 3, 'LA YARADA LOS PALOS', '230111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1833, 1, 187, 3, 'CANDARAVE', '230201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1834, 1, 187, 3, 'CAIRANI', '230202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1835, 1, 187, 3, 'CAMILACA', '230203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1836, 1, 187, 3, 'CURIBAYA', '230204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1837, 1, 187, 3, 'HUANUARA', '230205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1838, 1, 187, 3, 'QUILAHUANI', '230206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1839, 1, 188, 3, 'LOCUMBA', '230301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1840, 1, 188, 3, 'ILABAYA', '230302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1841, 1, 188, 3, 'ITE', '230303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1842, 1, 189, 3, 'TARATA', '230401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1843, 1, 189, 3, 'HEROES ALBARRACIN CHUCATAMANI', '230402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1844, 1, 189, 3, 'ESTIQUE', '230403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1845, 1, 189, 3, 'ESTIQUE-PAMPA', '230404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1846, 1, 189, 3, 'SITAJARA', '230405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1847, 1, 189, 3, 'SUSAPAYA', '230406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1848, 1, 189, 3, 'TARUCACHI', '230407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1849, 1, 189, 3, 'TICACO', '230408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1850, 1, 190, 3, 'TUMBES', '240101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1851, 1, 190, 3, 'CORRALES', '240102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1852, 1, 190, 3, 'LA CRUZ', '240103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1853, 1, 190, 3, 'PAMPAS DE HOSPITAL', '240104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1854, 1, 190, 3, 'SAN JACINTO', '240105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1855, 1, 190, 3, 'SAN JUAN DE LA VIRGEN', '240106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1856, 1, 191, 3, 'ZORRITOS', '240201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1857, 1, 191, 3, 'CASITAS', '240202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1858, 1, 191, 3, 'CANOAS DE PUNTA SAL', '240203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1859, 1, 192, 3, 'ZARUMILLA', '240301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1860, 1, 192, 3, 'AGUAS VERDES', '240302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1861, 1, 192, 3, 'MATAPALO', '240303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1862, 1, 192, 3, 'PAPAYAL', '240304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1863, 1, 193, 3, 'CALLERIA', '250101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1864, 1, 193, 3, 'CAMPOVERDE', '250102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1865, 1, 193, 3, 'IPARIA', '250103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1866, 1, 193, 3, 'MASISEA', '250104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1867, 1, 193, 3, 'YARINACOCHA', '250105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1868, 1, 193, 3, 'NUEVA REQUENA', '250106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1869, 1, 193, 3, 'MANANTAY', '250107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1870, 1, 194, 3, 'RAYMONDI', '250201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1871, 1, 194, 3, 'SEPAHUA', '250202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1872, 1, 194, 3, 'TAHUANIA', '250203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1873, 1, 194, 3, 'YURUA', '250204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1874, 1, 195, 3, 'PADRE ABAD', '250301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1875, 1, 195, 3, 'IRAZOLA', '250302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1876, 1, 195, 3, 'CURIMANA', '250303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1877, 1, 195, 3, 'NESHUYA', '250304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1878, 1, 195, 3, 'ALEXANDER VON HUMBOLDT', '250305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1879, 1, 195, 3, 'HUIPOCA', '250306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1880, 1, 195, 3, 'BOQUERON', '250307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1881, 1, 196, 3, 'PURUS', '250401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1882, 1, 26, 3, 'CHACHAPOYAS', '010101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1883, 1, 26, 3, 'ASUNCION', '010102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1884, 1, 26, 3, 'BALSAS', '010103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1885, 1, 26, 3, 'CHETO', '010104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1886, 1, 26, 3, 'CHILIQUIN', '010105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1887, 1, 26, 3, 'CHUQUIBAMBA', '010106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1888, 1, 26, 3, 'GRANADA', '010107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1889, 1, 26, 3, 'HUANCAS', '010108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1890, 1, 26, 3, 'LA JALCA', '010109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1891, 1, 26, 3, 'LEIMEBAMBA', '010110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1892, 1, 26, 3, 'LEVANTO', '010111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1893, 1, 26, 3, 'MAGDALENA', '010112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1894, 1, 26, 3, 'MARISCAL CASTILLA', '010113');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1895, 1, 26, 3, 'MOLINOPAMPA', '010114');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1896, 1, 26, 3, 'MONTEVIDEO', '010115');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1897, 1, 26, 3, 'OLLEROS', '010116');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1898, 1, 26, 3, 'QUINJALCA', '010117');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1899, 1, 26, 3, 'SAN FRANCISCO DE DAGUAS', '010118');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1900, 1, 26, 3, 'SAN ISIDRO DE MAINO', '010119');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1901, 1, 26, 3, 'SOLOCO', '010120');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1902, 1, 26, 3, 'SONCHE', '010121');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1903, 1, 27, 3, 'BAGUA', '010201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1904, 1, 27, 3, 'ARAMANGO', '010202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1905, 1, 27, 3, 'COPALLIN', '010203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1906, 1, 27, 3, 'EL PARCO', '010204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1907, 1, 27, 3, 'IMAZA', '010205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1908, 1, 27, 3, 'LA PECA', '010206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1909, 1, 28, 3, 'JUMBILLA', '010301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1910, 1, 28, 3, 'CHISQUILLA', '010302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1911, 1, 28, 3, 'CHURUJA', '010303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1912, 1, 28, 3, 'COROSHA', '010304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1913, 1, 28, 3, 'CUISPES', '010305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1914, 1, 28, 3, 'FLORIDA', '010306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1915, 1, 28, 3, 'JAZAN', '010307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1916, 1, 28, 3, 'RECTA', '010308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1917, 1, 28, 3, 'SAN CARLOS', '010309');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1918, 1, 28, 3, 'SHIPASBAMBA', '010310');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1919, 1, 28, 3, 'VALERA', '010311');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1920, 1, 28, 3, 'YAMBRASBAMBA', '010312');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1921, 1, 29, 3, 'NIEVA', '010401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1922, 1, 29, 3, 'EL CENEPA', '010402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1923, 1, 29, 3, 'RIO SANTIAGO', '010403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1924, 1, 30, 3, 'LAMUD', '010501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1925, 1, 30, 3, 'CAMPORREDONDO', '010502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1926, 1, 30, 3, 'COCABAMBA', '010503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1927, 1, 30, 3, 'COLCAMAR', '010504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1928, 1, 30, 3, 'CONILA', '010505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1929, 1, 30, 3, 'INGUILPATA', '010506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1930, 1, 30, 3, 'LONGUITA', '010507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1931, 1, 30, 3, 'LONYA CHICO', '010508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1932, 1, 30, 3, 'LUYA', '010509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1933, 1, 30, 3, 'LUYA VIEJO', '010510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1934, 1, 30, 3, 'MARIA', '010511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1935, 1, 30, 3, 'OCALLI', '010512');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1936, 1, 30, 3, 'OCUMAL', '010513');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1937, 1, 30, 3, 'PISUQUIA', '010514');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1938, 1, 30, 3, 'PROVIDENCIA', '010515');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1939, 1, 30, 3, 'SAN CRISTOBAL', '010516');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1940, 1, 30, 3, 'SAN FRANCISCO DEL YESO', '010517');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1941, 1, 30, 3, 'SAN JERONIMO', '010518');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1942, 1, 30, 3, 'SAN JUAN DE LOPECANCHA', '010519');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1943, 1, 30, 3, 'SANTA CATALINA', '010520');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1944, 1, 30, 3, 'SANTO TOMAS', '010521');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1945, 1, 30, 3, 'TINGO', '010522');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1946, 1, 30, 3, 'TRITA', '010523');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1947, 1, 31, 3, 'SAN NICOLAS', '010601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1948, 1, 31, 3, 'CHIRIMOTO', '010602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1949, 1, 31, 3, 'COCHAMAL', '010603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1950, 1, 31, 3, 'HUAMBO', '010604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1951, 1, 31, 3, 'LIMABAMBA', '010605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1952, 1, 31, 3, 'LONGAR', '010606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1953, 1, 31, 3, 'MARISCAL BENAVIDES', '010607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1954, 1, 31, 3, 'MILPUC', '010608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1955, 1, 31, 3, 'OMIA', '010609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1956, 1, 31, 3, 'SANTA ROSA', '010610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1957, 1, 31, 3, 'TOTORA', '010611');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1958, 1, 31, 3, 'VISTA ALEGRE', '010612');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1959, 1, 32, 3, 'BAGUA GRANDE', '010701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1960, 1, 32, 3, 'CAJARURO', '010702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1961, 1, 32, 3, 'CUMBA', '010703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1962, 1, 32, 3, 'EL MILAGRO', '010704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1963, 1, 32, 3, 'JAMALCA', '010705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1964, 1, 32, 3, 'LONYA GRANDE', '010706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1965, 1, 32, 3, 'YAMON', '010707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1966, 1, 33, 3, 'HUARAZ', '020101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1967, 1, 33, 3, 'COCHABAMBA', '020102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1968, 1, 33, 3, 'COLCABAMBA', '020103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1969, 1, 33, 3, 'HUANCHAY', '020104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1970, 1, 33, 3, 'INDEPENDENCIA', '020105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1971, 1, 33, 3, 'JANGAS', '020106');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1972, 1, 33, 3, 'LA LIBERTAD', '020107');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1973, 1, 33, 3, 'OLLEROS', '020108');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1974, 1, 33, 3, 'PAMPAS', '020109');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1975, 1, 33, 3, 'PARIACOTO', '020110');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1976, 1, 33, 3, 'PIRA', '020111');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1977, 1, 33, 3, 'TARICA', '020112');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1978, 1, 34, 3, 'AIJA', '020201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1979, 1, 34, 3, 'CORIS', '020202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1980, 1, 34, 3, 'HUACLLAN', '020203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1981, 1, 34, 3, 'LA MERCED', '020204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1982, 1, 34, 3, 'SUCCHA', '020205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1983, 1, 35, 3, 'LLAMELLIN', '020301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1984, 1, 35, 3, 'ACZO', '020302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1985, 1, 35, 3, 'CHACCHO', '020303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1986, 1, 35, 3, 'CHINGAS', '020304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1987, 1, 35, 3, 'MIRGAS', '020305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1988, 1, 35, 3, 'SAN JUAN DE RONTOY', '020306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1989, 1, 36, 3, 'CHACAS', '020401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1990, 1, 36, 3, 'ACOCHACA', '020402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1991, 1, 37, 3, 'CHIQUIAN', '020501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1992, 1, 37, 3, 'ABELARDO PARDO LEZAMETA', '020502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1993, 1, 37, 3, 'ANTONIO RAYMONDI', '020503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1994, 1, 37, 3, 'AQUIA', '020504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1995, 1, 37, 3, 'CAJACAY', '020505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1996, 1, 37, 3, 'CANIS', '020506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1997, 1, 37, 3, 'COLQUIOC', '020507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1998, 1, 37, 3, 'HUALLANCA', '020508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (1999, 1, 37, 3, 'HUASTA', '020509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2000, 1, 37, 3, 'HUAYLLACAYAN', '020510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2001, 1, 37, 3, 'LA PRIMAVERA', '020511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2002, 1, 37, 3, 'MANGAS', '020512');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2003, 1, 37, 3, 'PACLLON', '020513');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2004, 1, 37, 3, 'SAN MIGUEL DE CORPANQUI', '020514');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2005, 1, 37, 3, 'TICLLOS', '020515');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2006, 1, 38, 3, 'CARHUAZ', '020601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2007, 1, 38, 3, 'ACOPAMPA', '020602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2008, 1, 38, 3, 'AMASHCA', '020603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2009, 1, 38, 3, 'ANTA', '020604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2010, 1, 38, 3, 'ATAQUERO', '020605');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2011, 1, 38, 3, 'MARCARA', '020606');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2012, 1, 38, 3, 'PARIAHUANCA', '020607');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2013, 1, 38, 3, 'SAN MIGUEL DE ACO', '020608');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2014, 1, 38, 3, 'SHILLA', '020609');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2015, 1, 38, 3, 'TINCO', '020610');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2016, 1, 38, 3, 'YUNGAR', '020611');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2017, 1, 39, 3, 'SAN LUIS', '020701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2018, 1, 39, 3, 'SAN NICOLAS', '020702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2019, 1, 39, 3, 'YAUYA', '020703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2020, 1, 40, 3, 'CASMA', '020801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2021, 1, 40, 3, 'BUENA VISTA ALTA', '020802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2022, 1, 40, 3, 'COMANDANTE NOEL', '020803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2023, 1, 40, 3, 'YAUTAN', '020804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2024, 1, 41, 3, 'CORONGO', '020901');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2025, 1, 41, 3, 'ACO', '020902');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2026, 1, 41, 3, 'BAMBAS', '020903');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2027, 1, 41, 3, 'CUSCA', '020904');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2028, 1, 41, 3, 'LA PAMPA', '020905');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2029, 1, 41, 3, 'YANAC', '020906');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2030, 1, 41, 3, 'YUPAN', '020907');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2031, 1, 42, 3, 'HUARI', '021001');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2032, 1, 42, 3, 'ANRA', '021002');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2033, 1, 42, 3, 'CAJAY', '021003');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2034, 1, 42, 3, 'CHAVIN DE HUANTAR', '021004');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2035, 1, 42, 3, 'HUACACHI', '021005');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2036, 1, 42, 3, 'HUACCHIS', '021006');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2037, 1, 42, 3, 'HUACHIS', '021007');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2038, 1, 42, 3, 'HUANTAR', '021008');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2039, 1, 42, 3, 'MASIN', '021009');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2040, 1, 42, 3, 'PAUCAS', '021010');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2041, 1, 42, 3, 'PONTO', '021011');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2042, 1, 42, 3, 'RAHUAPAMPA', '021012');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2043, 1, 42, 3, 'RAPAYAN', '021013');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2044, 1, 42, 3, 'SAN MARCOS', '021014');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2045, 1, 42, 3, 'SAN PEDRO DE CHANA', '021015');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2046, 1, 42, 3, 'UCO', '021016');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2047, 1, 43, 3, 'HUARMEY', '021101');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2048, 1, 43, 3, 'COCHAPETI', '021102');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2049, 1, 43, 3, 'CULEBRAS', '021103');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2050, 1, 43, 3, 'HUAYAN', '021104');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2051, 1, 43, 3, 'MALVAS', '021105');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2052, 1, 44, 3, 'CARAZ', '021201');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2053, 1, 44, 3, 'HUALLANCA', '021202');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2054, 1, 44, 3, 'HUATA', '021203');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2055, 1, 44, 3, 'HUAYLAS', '021204');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2056, 1, 44, 3, 'MATO', '021205');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2057, 1, 44, 3, 'PAMPAROMAS', '021206');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2058, 1, 44, 3, 'PUEBLO LIBRE', '021207');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2059, 1, 44, 3, 'SANTA CRUZ', '021208');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2060, 1, 44, 3, 'SANTO TORIBIO', '021209');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2061, 1, 44, 3, 'YURACMARCA', '021210');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2062, 1, 45, 3, 'PISCOBAMBA', '021301');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2063, 1, 45, 3, 'CASCA', '021302');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2064, 1, 45, 3, 'ELEAZAR GUZMAN BARRON', '021303');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2065, 1, 45, 3, 'FIDEL OLIVAS ESCUDERO', '021304');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2066, 1, 45, 3, 'LLAMA', '021305');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2067, 1, 45, 3, 'LLUMPA', '021306');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2068, 1, 45, 3, 'LUCMA', '021307');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2069, 1, 45, 3, 'MUSGA', '021308');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2070, 1, 46, 3, 'OCROS', '021401');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2071, 1, 46, 3, 'ACAS', '021402');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2072, 1, 46, 3, 'CAJAMARQUILLA', '021403');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2073, 1, 46, 3, 'CARHUAPAMPA', '021404');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2074, 1, 46, 3, 'COCHAS', '021405');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2075, 1, 46, 3, 'CONGAS', '021406');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2076, 1, 46, 3, 'LLIPA', '021407');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2077, 1, 46, 3, 'SAN CRISTOBAL DE RAJAN', '021408');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2078, 1, 46, 3, 'SAN PEDRO', '021409');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2079, 1, 46, 3, 'SANTIAGO DE CHILCAS', '021410');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2080, 1, 47, 3, 'CABANA', '021501');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2081, 1, 47, 3, 'BOLOGNESI', '021502');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2082, 1, 47, 3, 'CONCHUCOS', '021503');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2083, 1, 47, 3, 'HUACASCHUQUE', '021504');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2084, 1, 47, 3, 'HUANDOVAL', '021505');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2085, 1, 47, 3, 'LACABAMBA', '021506');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2086, 1, 47, 3, 'LLAPO', '021507');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2087, 1, 47, 3, 'PALLASCA', '021508');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2088, 1, 47, 3, 'PAMPAS', '021509');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2089, 1, 47, 3, 'SANTA ROSA', '021510');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2090, 1, 47, 3, 'TAUCA', '021511');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2091, 1, 48, 3, 'POMABAMBA', '021601');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2092, 1, 48, 3, 'HUAYLLAN', '021602');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2093, 1, 48, 3, 'PAROBAMBA', '021603');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2094, 1, 48, 3, 'QUINUABAMBA', '021604');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2095, 1, 49, 3, 'RECUAY', '021701');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2096, 1, 49, 3, 'CATAC', '021702');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2097, 1, 49, 3, 'COTAPARACO', '021703');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2098, 1, 49, 3, 'HUAYLLAPAMPA', '021704');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2099, 1, 49, 3, 'LLACLLIN', '021705');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2100, 1, 49, 3, 'MARCA', '021706');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2101, 1, 49, 3, 'PAMPAS CHICO', '021707');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2102, 1, 49, 3, 'PARARIN', '021708');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2103, 1, 49, 3, 'TAPACOCHA', '021709');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2104, 1, 49, 3, 'TICAPAMPA', '021710');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2105, 1, 50, 3, 'CHIMBOTE', '021801');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2106, 1, 50, 3, 'CACERES DEL PERU', '021802');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2107, 1, 50, 3, 'COISHCO', '021803');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2108, 1, 50, 3, 'MACATE', '021804');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2109, 1, 50, 3, 'MORO', '021805');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2110, 1, 50, 3, 'NEPEÑA', '021806');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2111, 1, 50, 3, 'SAMANCO', '021807');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2112, 1, 50, 3, 'SANTA', '021808');
+INSERT INTO public.locations (id, country_id, parent_id, level_id, name, code) VALUES (2113, 1, 50, 3, 'NUEVO CHIMBOTE', '021809');
+
+
+--
+-- Name: administrative_levels_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.administrative_levels_id_seq', 1, false);
+
+
+--
+-- Name: countries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.countries_id_seq', 1, false);
+
+
+--
+-- Name: locations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: root
+--
+
+SELECT pg_catalog.setval('public.locations_id_seq', 2113, true);
+
+
+--
+-- Name: administrative_levels administrative_levels_country_id_level_order_key; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.administrative_levels
+    ADD CONSTRAINT administrative_levels_country_id_level_order_key UNIQUE (country_id, level_order);
+
+
+--
+-- Name: administrative_levels administrative_levels_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.administrative_levels
+    ADD CONSTRAINT administrative_levels_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: countries countries_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.countries
+    ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: locations locations_pkey; Type: CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: idx_locations_code; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_locations_code ON public.locations USING btree (code);
+
+
+--
+-- Name: idx_locations_level_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_locations_level_id ON public.locations USING btree (level_id);
+
+
+--
+-- Name: idx_locations_parent; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_locations_parent ON public.locations USING btree (parent_id);
+
+
+--
+-- Name: idx_locations_parent_id; Type: INDEX; Schema: public; Owner: root
+--
+
+CREATE INDEX idx_locations_parent_id ON public.locations USING btree (parent_id);
+
+
+--
+-- Name: administrative_levels administrative_levels_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.administrative_levels
+    ADD CONSTRAINT administrative_levels_country_id_fkey FOREIGN KEY (country_id) REFERENCES public.countries(id);
+
+
+--
+-- Name: locations locations_country_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_country_id_fkey FOREIGN KEY (country_id) REFERENCES public.countries(id);
+
+
+--
+-- Name: locations locations_level_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_level_id_fkey FOREIGN KEY (level_id) REFERENCES public.administrative_levels(id);
+
+
+--
+-- Name: locations locations_parent_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: root
+--
+
+ALTER TABLE ONLY public.locations
+    ADD CONSTRAINT locations_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.locations(id);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict Dds1O3o0UZrf6GAO37utvfryNRKCwt0oAY1phvUpq0FLZSkQrTtTScuJdNpoWfk
+
