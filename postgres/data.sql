@@ -1,35 +1,14 @@
-CREATE TABLE public.countries (
-    id         SERIAL PRIMARY KEY,
-    name       VARCHAR(255) NOT NULL,
-    code       VARCHAR(3) NOT NULL,
-    is_active  BOOLEAN DEFAULT true,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE TABLE public.administrative_levels (
-    id          SERIAL PRIMARY KEY,
-    country_id  INTEGER NOT NULL,
-    name        VARCHAR(100) NOT NULL,
-    level_order INTEGER NOT NULL
-);
-
-CREATE TABLE public.locations (
-    id         SERIAL PRIMARY KEY,
-    country_id INTEGER NOT NULL,
-    parent_id  INTEGER,
-    level_id   INTEGER NOT NULL,
-    name       VARCHAR(150) NOT NULL,
-    code       VARCHAR(20)
-);
-
--- Llaves primarias (Si no las definiste en el CREATE TABLE)
-ALTER TABLE ONLY public.countries ADD CONSTRAINT countries_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY public.administrative_levels ADD CONSTRAINT administrative_levels_pkey PRIMARY KEY (id);
-ALTER TABLE ONLY public.locations ADD CONSTRAINT locations_pkey PRIMARY KEY (id);
-
-
-
-INSERT INTO public.countries (id, name, code, is_active, created_at) VALUES (1, 'Perú', 'PER', true, '2026-05-09 02:04:13.113346+00');
+-- ==============================================================================
+-- Archivo de Datos Geogr�ficos (UBIGEO)
+-- ==============================================================================
+-- Este archivo contiene las inserciones de datos estructuradas con el modelo de lista de adyacencia.
+-- 
+-- Orden de insercin:
+-- 1. countries: Pases soportados.
+-- 2. administrative_levels: Niveles de divisin (Ej. Departamento, Provincia, Distrito).
+-- 3. locations: Registros geogrficos reales (Ubicaciones) apuntando a sus padres.
+-- ==============================================================================
+INSERT INTO public.countries (id, name, code, is_active) VALUES (1, 'Perú', 'PER', true);
 
 
 INSERT INTO public.administrative_levels (id, country_id, name, level_order) VALUES (1, 1, 'Departamento', 1);
@@ -2166,19 +2145,6 @@ SELECT pg_catalog.setval('public.locations_id_seq', (SELECT MAX(id) FROM public.
 -- Restricción de unicidad para niveles
 ALTER TABLE ONLY public.administrative_levels
     ADD CONSTRAINT administrative_levels_country_id_level_order_key UNIQUE (country_id, level_order);
-
--- Llaves Foráneas (Foreign Keys)
-ALTER TABLE ONLY public.administrative_levels
-    ADD CONSTRAINT administrative_levels_country_id_fkey FOREIGN KEY (country_id) REFERENCES public.countries(id);
-
-ALTER TABLE ONLY public.locations
-    ADD CONSTRAINT locations_country_id_fkey FOREIGN KEY (country_id) REFERENCES public.countries(id);
-
-ALTER TABLE ONLY public.locations
-    ADD CONSTRAINT locations_level_id_fkey FOREIGN KEY (level_id) REFERENCES public.administrative_levels(id);
-
-ALTER TABLE ONLY public.locations
-    ADD CONSTRAINT locations_parent_id_fkey FOREIGN KEY (parent_id) REFERENCES public.locations(id);
 
 
 -- Índices optimizados
